@@ -1,4 +1,4 @@
-# Master-Thesis
+## Master-Thesis
 
 # Documents folder 
   Contains literature relevant for thesis development.

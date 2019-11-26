@@ -1,7 +1,7 @@
-## Master-Thesis
+# Master-Thesis
 
-# Documents folder 
+## Documents folder 
   Contains literature relevant for thesis development.
 
-# Dummy data folder 
+## Dummy data folder 
   Contains scripts for generation of random data .py and .csv files

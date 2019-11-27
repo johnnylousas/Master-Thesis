@@ -41,7 +41,18 @@ This table contains the history of all tests that have been run.
 
 
 A good test strategy would use heuristics to exploit common usage pattern. Machine learning can be used to learn those heuristics automatically.
-Typical heuristics: 
+
+Typical heuristics, related to for files patterns: 
+-	some files are stable and affect a lot of tests (example : the standard libraries, the core functions, like LAPACK pakage, etc)
+-	some files are moving much and affect few tests (for instance a new cool feature)
+-	slso you have cross effects (modifying a database will have wide effect, so does core function, and there is overlap
+
+Typical heuristics, related to user commit  pattern: 
+-	when an author makes a change that caused a regression, his subsequent commits are likely to affect the same tests (to fix them or break them again).
+
+
+
+
 - when an author makes a change that causes regression, his subsequent commits are likely to affect the same tests.
 - some tests are good indicator of whether other tests will fail
 - etc...

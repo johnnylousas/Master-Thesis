@@ -11,7 +11,8 @@ import datetime
 
 class DataGenerator:
 
-    def __init__(self, nr_records: int = 10, nr_tests: int = 10, nr_commits: int = 10, nr_developers: int = 4):
+    def __init__(self, nr_records: int = 10, nr_tests: int = 10, nr_commits: int = 10, nr_developers: int = 4,
+                 opt: str = 'naive'):
         """
         Define data frames from given parameters
         :parameter  nr_records: number of files in database
@@ -24,16 +25,29 @@ class DataGenerator:
         self.nr_tests = nr_tests
         self.nr_commits = nr_commits
         self.nr_developers = nr_developers
+        self.opt = opt
 
         self.fieldnames_src = ['id', 'prevalence', 'stability']
-        self.fieldnames_test = ['id', 'time_to_run', 'dependence']
+        self.fieldnames_test = ['id', 'size', 'time_to_run', 'dependence']
         self.fieldnames_commits = ['commit_id', 'author', 'timestamp', 'modified_files', 'broken_files']
+
         self.fieldnames_run_tests = ['commit_id', 'test_id', 'timestamp', 'test_status']
 
         self.df_src = pd.DataFrame(self.create_rows_src())
         self.df_test = pd.DataFrame(self.create_rows_test())
         self.df_cmt = pd.DataFrame(self.create_rows_cmt())
-        self.df_run_test = pd.DataFrame(self.create_rows_run_test_hist())
+
+        if self.opt.__eq__('naive'):
+            self.df_run_test_naive = pd.DataFrame(self.create_rows_run_test_hist_naive())
+        elif self.opt.__eq__('acc'):
+            self.df_run_test_acc = pd.DataFrame(self.create_rows_run_test_hist_acc())
+        elif self.opt.__eq__('both'):
+            self.df_run_test_naive = pd.DataFrame(self.create_rows_run_test_hist_naive())
+            self.df_run_test_acc = pd.DataFrame(self.create_rows_run_test_hist_acc())
+
+        else:
+            print('option provided not available')
+            exit()
 
     def create_rows_src(self):
         """
@@ -53,15 +67,23 @@ class DataGenerator:
     def create_rows_test(self):
         """
         Generates test list filled with faked data. (Seeded - always same outcome for simplicity)
+        Test are generated based on size: small tests -> 5 min , medium tests -> 15 min and large tests -> 45 min
         :parameter
         :return: --- <class 'list'>
         """
         random.seed(2)
         fake = Faker()
         Faker.seed(2)
+
+        categories = {'small': 5, 'medium': 15, 'large': 45}
+        size = [random.choice(list(categories.keys())) for x in
+                range(self.nr_tests)]
+        time_to_run = [categories.get(i) for i in size]
+
         output = [{
             "id": fake.file_name(category=None, extension='test'),
-            "time_to_run": random.randint(0, 200),
+            "size": size[x],
+            "time_to_run": time_to_run[x],
             "dependence": random.sample(self.df_src['id'].tolist(), k=random.randint(1, 4))} for x in
             range(self.nr_tests)]
         return output
@@ -119,7 +141,7 @@ class DataGenerator:
                 broken_files.append(id2[i])
         return modified_files, broken_files
 
-    def create_rows_run_test_hist(self):
+    def create_rows_run_test_hist_naive(self):
         """
         Generates list of already run tests, applying each test to each commit (first approach)
         :parameter
@@ -127,10 +149,8 @@ class DataGenerator:
         """
         test_list = self.df_test['id'].to_list()
         duration = self.df_test['time_to_run'].to_list()
-        print(duration)
-        for i in range(len(duration)-1):
-            duration[i+1] += duration[i]
-        print(duration)
+        for i in range(len(duration) - 1):
+            duration[i + 1] += duration[i]
         test_dependence = self.df_test['dependence'].to_list()
 
         commit_id = self.df_cmt['commit_id'].to_list()
@@ -143,6 +163,31 @@ class DataGenerator:
             "timestamp": dates_list[i] + datetime.timedelta(minutes=duration[x]),
             "test_status": self.apply_test(test_dependence[x], broken_files[i])
         } for i in range(len(commit_id)) for x in range(self.nr_tests)]
+        return output
+
+    def create_rows_run_test_hist_acc(self):
+        """
+        Generates list of already run tests, applying each test to a commit, given a time period (accumulative approach)
+        NOT IMPLEMENTED
+        :parameter
+        :return: --- <class 'list'>
+        """
+        test_list = self.df_test['id'].to_list()
+        duration = self.df_test['time_to_run'].to_list()
+        for i in range(len(duration) - 1):
+            duration[i + 1] += duration[i]
+        test_dependence = self.df_test['dependence'].to_list()
+
+        commit_id = self.df_cmt['commit_id'].to_list()
+        dates_list = [datetime.datetime.strptime(date, '%d/%m/%y %H:%M') for date in self.df_cmt['timestamp'].to_list()]
+        broken_files = self.df_cmt['Broken_files'].to_list()
+
+        output = [{
+            "id": commit_id[i],
+            "test_id": test_list[x],
+            "timestamp": dates_list[i] + datetime.timedelta(minutes=duration[x]),
+            "test_status": self.apply_test(test_dependence[x], broken_files[i])
+        } for i in range(0, len(commit_id), 5) for x in range(self.nr_tests)]
         return output
 
     def check_dep(self, files: list, test_dep: list):
@@ -183,7 +228,15 @@ class DataGenerator:
             print(self.df_src)
             print(self.df_test)
             print(self.df_cmt)
-            print(self.df_run_test)
+
+        if self.opt.__eq__('naive'):
+            print(self.df_run_test_naive)
+        elif self.opt.__eq__('acc'):
+            print(self.df_run_test_acc)
+        elif self.opt.__eq__('both'):
+            print(self.df_run_test_naive)
+            print(self.df_run_test_acc)
+
 
     def write(self):
         """
@@ -194,12 +247,30 @@ class DataGenerator:
         self.df_src.to_csv("src.csv", sep='\t')
         self.df_test.to_csv("test.csv", sep='\t')
         self.df_cmt.to_csv("cmt.csv", sep='\t')
-        self.df_run_test.to_csv("run_test_history.csv", sep='\t')
+
+        if self.opt.__eq__('naive'):
+            self.df_run_test_naive.to_csv("run_test_history_naive.csv", sep='\t')
+        elif self.opt.__eq__('acc'):
+            self.df_run_test_acc.to_csv("run_test_history_acc.csv", sep='\t')
+        elif self.opt.__eq__('both'):
+            self.df_run_test_naive.to_csv("run_test_history_naive.csv", sep='\t')
+            self.df_run_test_acc.to_csv("run_test_history_acc.csv", sep='\t')
+
+
+    def main(self):
+        """
+        Main function, executes print and write tasks
+        :parameter
+        :return: --- <class 'NoneType'>
+        """
+        print('Class element DataGenerator created')
+        # prints result of tables
+        self.print()
+        # Write new .csv file
+        self.write()
 
 
 # ================
-# Create class elemente Data Generator
-D = DataGenerator()
 
-# Write new .csv file
-# D.write()
+if __name__ == '__main__':
+    DataGenerator(opt='both').main()

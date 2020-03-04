@@ -1,0 +1,48 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                      %
+%     File: Thesis_Implementation.tex                                  %
+%     Tex Master: Thesis.tex                                           %
+%                                                                      %
+%     Author: Andre C. Marta                                           %
+%     Last modified :  2 Jul 2015                                      %
+%                                                                      %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Implementation}
+\label{chapter:implementation}
+
+\section{Synthetic Data Generation}
+
+On a first level, the strategy is focused on trying to mimic a real life environment and try to find correlations between commits and regressions, by creating a  data set that contains: (1) A list of commits, containing information of what/when files have been modified, and (2) a list of tests, with the associated duration and files covered. After that, we can experiment the different approaches explored above and combine some aspects to efficiently have a scalable Continuous Integration system. Firstly, the determination of automated techniques that facilitate an early detection, for example:
+
+\begin{multicols}{2}
+	\begin{itemize}
+		\item \textbf{Commit List}
+		\SubItem{when someone makes a change that caused a regression, subsequent commits are prone to affect the same tests}
+		\SubItem{some tests might be an indicator of whether other tests will fail}
+		\SubItem{keeping a score board, based on past-history, to estimate the probability a given developer has of making a faulty committing.}
+	\end{itemize}
+	
+	\begin{itemize}
+		\item \textbf{Test List}
+		\SubItem{ modifying a file might trigger off faults on files that depend on the first}
+		\SubItem{some files affect many tests, but can be very stable and not cause failures often. - (for instance standard libraries)}
+		\SubItem{other files, that affect few tests, are harder to cover and validate. - (like an innovative feature)}
+	\end{itemize}
+\end{multicols}
+
+Finally, a test run list is generated to analyse the results of the approaches, this list is expected to contain a live-estimate of the status of the project as tests are being run. At the beginning, the value for the uncertainty that commit will pass has its maximum value and the goal is to choose what test to apply next, in order to minimize this uncertainty and give the estimate between a confidence value, being more accurate as more tests are applied. This way it is possible to keep up with the projects' progress as time evolves.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Numerical Model}
+\label{section:model}
+
+Description of the numerical implementation of the models explained in Chapter~\ref{chapter:background}...
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Verification and Validation}
+\label{section:verification}
+
+Basic test cases to compare the implemented model against other numerical tools (verification) and experimental data (validation)...
+

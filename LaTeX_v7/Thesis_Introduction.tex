@@ -1,0 +1,70 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                      %
+%     File: Thesis_Introduction.tex                                    %
+%     Tex Master: Thesis.tex                                           %
+%                                                                      %
+%     Author: Andre C. Marta                                           %
+%     Last modified :  2 Jul 2015                                      %
+%                                                                      %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\SubItem}[1]{
+	{\setlength\itemindent{15pt} \item[-] #1}
+}
+
+\chapter{Introduction}
+\label{chapter:introduction}
+
+Nowadays, it has become crucial to have an efficient and reliable way to keep track of software changes, specially in large and fast-paced companies \cite{Uber}. In many of them, source-code \textit{"repositories"} are the preferred choice: offering the agility of having access to all historical code versions developed so far, keeping track of the changes that were made. Due to the sheer amount of changes that are made daily, in these kinds of environments, the probability that one of them creates a conflict is significant, leading to a breakage. This is an undesirable situation, since it may lead to development over a defective \textit{"master"} (mainline hereafter) \footnote{a master represents the main history of code versions - i.e. the main branch (described below)  }, so it is critical to rapidly detect and patch what caused the breakage.
+
+A mainline is \textit{"green"}, if all build steps (i.e. compilation, unit tests, User Interface tests) are successfully executed for every change point in history, otherwise it is called \textit{"red"}, and keeping it that way is a key factor to achieve maximum performance \cite{Uber}. However finding a scalable solution, given a constraint of time and computer resources, is a challenging task in order to find a balance between correctness and speed, so there is a high demand for automated techniques to help developers keep the master green.\cite{Ziftci}. The strategy is to collect data from a large company and use heuristics to exploit common patterns that can be learned by machine learning algorithms and then, based on that knowledge, estimate where a breakage, most likely, occurred, and most importantly reduce the time to do so.
+
+There are many ways to configure the architecture of such systems and to manage testing. Therefore, several approaches are compared below. For now, let us start by defining some fundamental concepts needed for the analysis.
+
+%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Motivation}
+\label{section:motivation}
+
+Relevance of the subject...
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Continuous Integration }
+\label{section:ci}
+
+Continuous Integration (CI) is a popular software development technique that allows developers to easily check that their code can build successfully and pass tests across various system environments.\cite{santolucito2018statically} However, it is not straightforward to develop and configure this methodology, there are numerous approaches and several ways to solve the same problem, which are explored below. The key aspect is to navigate through the options of how to commit and how to test, compare them and acknowledge what features can be leveraged at the expense of others, making it possible to find a scalable solution.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Repository}
+\label{section:repository}
+
+Provide an overview of the topic to be studied...
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Objectives}
+\label{section:objectives}
+The objectives delineated for this work are:
+\begin{itemize}
+	\item Detect common usage patterns, in a controlled environment, by generating synthetic data.
+	\SubItem{Learn heuristics to automate fault detection process}
+	\item Optimize regression testing systems using real world data.
+	\SubItem{Analyse how different system configurations affect Continuous Integration}
+	\SubItem{Reduce fault detection time}
+	\SubItem{Provide a Live-Estimate of the Status of a Project}
+	\SubItem{Given a commit, choose which chain of tests minimize pass/fail uncertainty}
+\end{itemize}
+Explicitly state the objectives set to be achieved with this thesis...
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Thesis Outline}
+\label{section:outline}
+
+Briefly explain the contents of the different chapters...
+

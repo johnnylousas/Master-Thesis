@@ -17,6 +17,16 @@ This table contains the list of all tests.
 - time to run: time needed to run the test (everything else being equal, faster tests are better)
 - depends on (be obtained by code coverage tools, but usually *hidden information*): list of files this test depends on
 
+## Commit list.
+This table contains the information typically obtained from a source control log: a chronological list of all changes and related information.
+- commit_id: unique commit identifier
+- author: name of the author of the change
+- timestamp: modification time and date
+- modified files: list of files modified by the commit
+- broken files (hidden information): list of files with regressions
+
+ NOTE: these attributes are set to be chosen randomly.
+
 ---
 
 # Test strategy 
@@ -25,6 +35,8 @@ A naive approach if to run all teas for each commit. This solution does not scal
 As project and teams gets bigger, the number of commits per day grows linearly, the number of test to run also grows linearly. 
 All in all, with naive approach, the computing resources grows quadratically with the size of the project.
 
+A more swift approach would be to only apply tests periodically, rather than checking every single commit. Then when faults are detected, we need binary search to trace back the initial faulty commit.
+
 Also, people want to quickly know the status of the tests when they do a change (pre-commit hook, or commit watchdog).
 
 The objective is, under given constraint of time and resources, to give the best Live estimate of the status of the project.
@@ -32,7 +44,7 @@ The performance of a given strategy can be measured, a posteriori by looking at 
 
 ## Test run history
 
-This table contains the history of all tests that have been run.
+This table contains the history of all tests that have been run and different approaches can be taken. The code allows the user to choose between generating this table using Naive or Accumulative approach.
 - commit_id: what version of the project has been tested
 - test_id: what test has been run 
 - timestamp: when the test has been run
@@ -59,3 +71,8 @@ Typical heuristics, related to user commit  pattern:
 
 
 *When generating playground Commit list and Test files list, you should make sure you emulate those patterns. *
+
+
+By default, the repository created in the code has 10 files, 10 tests, 10 commits and 4 developers in the team, to facilitate human interpretation. All of these parameters are free to be tuned. The output of the code are 4 .csv files corresponding to the 4 tables described above.
+
+

@@ -2,6 +2,12 @@
 This folder contains a controlled environment that mimics what happens in a real life environment.
 
 # Main tables 
+## Source files List
+This table contains the files that belong to the repository, with the following info:
+
+- id: file name
+- prevalence: percentage of times this file is modified (if prevalence = 100, in every commit this file is modified)
+- stability : probability of being broken by a test (here I started with 90-100% chance)
 
 ## Commit list. 
 This table contains the information typically obtained from a source control log: a chronological list of all changes and related information.
@@ -16,14 +22,6 @@ This table contains the list of all tests.
 - test_id: unique test identifier
 - time to run: time needed to run the test (everything else being equal, faster tests are better)
 - depends on (be obtained by code coverage tools, but usually *hidden information*): list of files this test depends on
-
-## Commit list.
-This table contains the information typically obtained from a source control log: a chronological list of all changes and related information.
-- commit_id: unique commit identifier
-- author: name of the author of the change
-- timestamp: modification time and date
-- modified files: list of files modified by the commit
-- broken files (hidden information): list of files with regressions
 
  NOTE: these attributes are set to be chosen randomly.
 

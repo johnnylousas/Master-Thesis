@@ -1,6 +1,6 @@
 # Synthetic Data Generator - Source Code
 
-In this folder, there are .py files that are orchestrated in an OOP way to build a sample engine.
+In this folder, there are .py files that are orchestrated in an OOP way to build a sample engine, with the following short description: (each file has docstring documentation)
 
 # File.py
 
@@ -11,3 +11,5 @@ In this folder, there are .py files that are orchestrated in an OOP way to build
 # SampleGenerator.py
 
 # DataFrame.py
+
+# Tools.py

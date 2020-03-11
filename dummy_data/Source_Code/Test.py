@@ -4,9 +4,10 @@ from faker import Faker
 
 # Test Class
 # ================
+from dummy_data.Group import Group
 
 
-class Test:
+class Test(Group):
 
     def __init__(self):
         """
@@ -18,16 +19,12 @@ class Test:
                     time_to_run: time a test takes to run, in minutes.
         :return: --- <class 'NoneType'>
         """
-        random.seed()
+        super().__init__()
         fake = Faker()
-
-        groups = ['A', 'B', 'C', 'D']
         categories = ['small', 'medium', 'large']
 
         self.id = fake.file_name(category=None, extension='test')
-        self.group = random.sample(groups, k=1)[0]
         self.size = random.choice(categories)
-
         self.time_to_run = self.run_time()
 
     def run_time(self):
@@ -42,6 +39,22 @@ class Test:
             return random.randint(5, 15)
         elif self.size.__eq__('large'):
             return random.randint(15, 45)
+
+    def get_group(self):
+        """
+        Returns test group
+        :parameter
+        :return: --- <class 'string'>
+        """
+        return self.group
+
+    def get_time(self):
+        """
+        Returns time to run
+        :parameter
+        :return: --- <class 'int'>
+        """
+        return self.time_to_run
 
     def print(self):
         """
@@ -67,21 +80,5 @@ class Test:
         :return: --- <class 'string'>
         """
         return '<Test: %s>' % self.id
-
-    def get_group(self):
-        """
-        Returns test group
-        :parameter
-        :return: --- <class 'string'>
-        """
-        return self.group
-
-    def get_time(self):
-        """
-        Returns time to run
-        :parameter
-        :return: --- <class 'int'>
-        """
-        return self.time_to_run
 
 # ================

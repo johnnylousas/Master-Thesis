@@ -1,12 +1,13 @@
 import random
 from faker import Faker
 import pandas as pd
+from dummy_data.Group import Group
 
 # File Class
 # ================
 
 
-class File:
+class File(Group):
 
     def __init__(self):
         """
@@ -27,10 +28,9 @@ class File:
         :return: --- <class 'NoneType'>
         """
         fake = Faker()
-        groups = ['A', 'B', 'C', 'D']
+        super().__init__()
 
         self.id = fake.file_name(category=None, extension=None)
-        self.group = random.sample(groups, k=1)[0]
         self.prevalence = self.prevalence()
         self.stability = self.stability()
         self.impact = self.impact()
@@ -78,31 +78,6 @@ class File:
         elif self.group.__eq__('D'):
             return random.randint(0, 100)
 
-    def __repr__(self):
-        """
-        Returns string corresponding to desired representation
-        :parameter
-        :return: --- <class 'string'>
-        """
-        return '<File %s>' % self.id
-
-    def print(self):
-        """
-        Prints class elements
-        :parameter
-        :return: --- <class 'NoneType'>
-        """
-        attrs = vars(self)
-        print(', '.join("%s: %s" % item for item in attrs.items()))
-
-    def to_dict(self):
-        """
-        Converts class attributes into dictionary
-        :parameter
-        :return: --- <class 'dict'>
-        """
-        return vars(self)
-
     def get_stability(self):
         """
         Returns attribute stability
@@ -134,6 +109,31 @@ class File:
         :return: --- <class 'string'>
         """
         return self.group
+
+    def __repr__(self):
+        """
+        Returns string corresponding to desired representation
+        :parameter
+        :return: --- <class 'string'>
+        """
+        return '<File %s>' % self.id
+
+    def print(self):
+        """
+        Prints class elements
+        :parameter
+        :return: --- <class 'NoneType'>
+        """
+        attrs = vars(self)
+        print(', '.join("%s: %s" % item for item in attrs.items()))
+
+    def to_dict(self):
+        """
+        Converts class attributes into dictionary
+        :parameter
+        :return: --- <class 'dict'>
+        """
+        return vars(self)
 
 # ================
 

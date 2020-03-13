@@ -7,7 +7,7 @@ This table contains the files that belong to the repository, with the following 
 
 - id: file name
 - prevalence: percentage of times this file is modified (if prevalence = 100, in every commit this file is modified)
-- stability : probability of being broken by a test (here I started with 90-100% chance)
+- stability : probability of being broken by a test.
 
 ## Commit list. 
 This table contains the information typically obtained from a source control log: a chronological list of all changes and related information.

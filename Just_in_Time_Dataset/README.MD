@@ -24,3 +24,14 @@ This dataset contains the following features:
 - bug: 1 if buggy, 0 otherwise
 
 In this folder, I apply my own models to this dataset, such as, Logistic Regression, Decision Trees and Artificial Neural Networks.
+
+# Code 
+
+## classifier.py
+  This class provides the tools needed to apply Logistic Regression, Decision Trees and Artificial Neural Network models to the dataset. Methods from this class englobe data visualization - boxplots, histograms, scatterplots, correlation maps, etc. - data preprocessing - through the method preprocess(option: str) it is possible to apply several preprocessing techniques, implemented in the file below.
+  
+## preprocess.py
+  Preprocessing techniques like: MinMaxScaler, StandardScaler, SMOTE, UnderSampling, Near Miss, PCA, LDA, Feature Selection, etc.
+
+## plotFunctions.py
+  Functions relative to data visualization.

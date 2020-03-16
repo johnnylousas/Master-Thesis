@@ -2,24 +2,21 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from imblearn.over_sampling import SMOTE
-from imblearn.under_sampling import RandomUnderSampler
-from keras.layers import Dropout
-from sklearn.decomposition import PCA
-from sklearn.feature_selection import SelectKBest, f_classif
 from sklearn.linear_model import LogisticRegression, LogisticRegressionCV
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split, cross_val_score
 import sklearn.metrics as metrics
 from sklearn.tree import DecisionTreeClassifier
 import plotFunctions as func
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
+import preprocess as prep
 
 
 # Higly correlated feature elimination
 def compute_data_drop(data, threshold: float):
     """
     Finds highly correlated columns (defined by threshold) and drops them, leaving the first one.
-    :parameter idx: if given index, operates over the respective data subset
+    :param data:
+    :param threshold:
     :return: --- <class 'pandas.DataFrame'>
     """
 
@@ -150,70 +147,46 @@ class Classifier:
                                 values, 'Target', 'frequency', 'Class balance')
         plt.show()
 
-    # Data Preprocess
-    # Data Scaling
-    def standardScaler(self):
-        # Feature Scaling
-        sc = StandardScaler()
-        self.trnX = sc.fit_transform(self.trnX)
-        self.tstX = sc.transform(self.tstX)
-
-    def minMax(self):
-        minmax = MinMaxScaler()
-        self.trnX = minmax.fit_transform(self.trnX)
-        self.tstX = minmax.transform(self.tstX)
-
-        # Data Balancing
-
-    def smote(self):
-        sampler = SMOTE(random_state=41)
-        self.trnX, self.trnY = sampler.fit_resample(self.trnX, self.trnY.ravel())
-        print('  shape %s', str(self.trnX.shape))
-
-    def undersample(self):
-        sampler = RandomUnderSampler(sampling_strategy='majority')
-        self.trnX, self.trnY = sampler.fit_sample(self.trnX, self.trnY)
-        print('  shape %s', str(self.trnX.shape))
-
-        # Feature Selection
-
-        # Feature Selection
-
-    def feature_selection(self, k):
-        fs = SelectKBest(f_classif, k)
-        fs.fit(self.trnX, self.trnY)
-        trn_x = fs.transform(self.trnX)
-        tst_x = fs.transform(self.tstX)
-        print('strategy' + ' | ' + 'nr. of components' + ' | ' + ' shape trn, tst' + ' | ' + 'pvalues')
-        print(trn_x.shape, tst_x.shape, fs.pvalues_[:5])
-        return trn_x, tst_x
-
-    def FS_param_tuning(self, model):
-        comp = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-        yvalues = []
-        axs = plt.axes()
-        for i in comp:
-            trn_x, tst_x = self.feature_selection(k=i)
-            model.fit(trn_x, self.trnY)
-            prdY = model.predict(tst_x)
-            yvalues.append(metrics.accuracy_score(self.tstY, prdY))
-        func.scatter(ax=axs, xvalues=comp, yvalues=yvalues, xlabel='nr_components', ylabel='accuracy',
-                     title='FeatureSelection_tuning')
-        plt.show()
-
-    def PCA(self, k):
-        pca = PCA(n_components=k)
-        pca.fit(self.trnX, self.trnY)
-        trnX = pca.transform(self.trnX)
-        tstX = pca.transform(self.tstX)
-        return trnX, tstX
+    # Data Preprocessing
+    def preprocess(self, opt: str = None, k: int = 2):
+        print('Preprocessing technique chosen', opt)
+        if opt == 'minmax':
+            self.trnX, self.tstX = prep.minMax(self.trnX, self.tstX)
+        elif opt == 'standard':
+            self.trnX, self.tstX = prep.standard(self.trnX, self.tstX)
+        elif opt == 'smote':
+            self.trnX, self.trnY = prep.smote(self.trnX, self.trnY)
+            print('  shape %s' % str(self.trnX.shape))
+        elif opt == 'nearmiss':
+            self.trnX, self.trnY = prep.near_miss(self.trnX, self.trnY)
+            print('  shape %s' % str(self.trn_x.shape))
+        elif opt == 'undersample' or opt == 'outliers':
+            self.trnX, self.trnY = prep.undersample(self.trnX, self.trnY)
+        elif opt == 'pca':
+            self.trnX, self.trnY, self.tst_x = prep.PrincipalComponentAnalysis(self.trnX, self.tstX, self.trnY, k)
+        elif opt == 'lda':
+            self.trnX, self.tstX = prep.LDA(self.trnX, self.tstX, self.trnY, k)
+        elif opt == 'fs':
+            self.trnX, self.tstX = prep.FS(self.trnX, self.tstX, self.trnY, k)
+        else:
+            print('# ============')
+            print('  Option not available')
+            print('  MinMaxScaler option:  minmax')
+            print('  StandardScaler option:  standard')
+            print('  SMOTE option:  smote')
+            print('  Near Miss option:  nearmiss')
+            print('  Under Sampling option:  undersample')
+            print('  PCA option:  pca')
+            print('  LDA option:  lda')
+            print('  Feature Selection option:  fs')
+            print('# ============')
 
     def PCA_param_tuning(self, model):
         comp = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
         yvalues = []
         axs = plt.axes()
         for i in comp:
-            trn_x, tst_x = self.PCA(k=i)
+            trn_x, tst_x = prep.PrincipalComponentAnalysis(self.trnX, self.tstX, self.trnY, k_value=i)
             model.fit(trn_x, self.trnY)
             prdY = model.predict(tst_x)
             yvalues.append(metrics.accuracy_score(self.tstY, prdY))
@@ -221,8 +194,20 @@ class Classifier:
                      title='PCA_tuning')
         plt.show()
 
-    # Machine Learning Methods
+    def FS_param_tuning(self, model):
+        comp = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+        yvalues = []
+        axs = plt.axes()
+        for i in comp:
+            trn_x, tst_x = prep.FS(self.trnX, self.tstX, self.trnY, k_value=i)
+            model.fit(trn_x, self.trnY)
+            prdY = model.predict(tst_x)
+            yvalues.append(metrics.accuracy_score(self.tstY, prdY))
+        func.scatter(ax=axs, xvalues=comp, yvalues=yvalues, xlabel='nr_components', ylabel='accuracy',
+                     title='FeatureSelection_tuning')
+        plt.show()
 
+    # Machine Learning Methods
     def logistic_regression(self, solver: str = 'liblinear', Cs: int = 10):
         print('#===============')
         print('Logistic Regression Model')
@@ -403,17 +388,22 @@ class Classifier:
 
 # =========
 
+# Data prep
 data: pd.DataFrame = pd.read_csv('input/bugzilla.csv')
 date = data.pop('commitdate').values
 
-classifier = Classifier(data, target='bug', datadrop=True)
-classifier.minMax()
-classifier.undersample()
+# Class element creation
+classifier = Classifier(data, target='bug', datadrop=False)
 
+# Desired Preprocessing
+classifier.preprocess(opt='minmax')
+classifier.preprocess(opt='fs', k=2)
+
+# Model Application
 classifier.logistic_regression()
 classifier.decision_tree()
 
 # classifier.ann()
 # classifier.eval_ann()
 # classifier.improve_ann()
-# best params (batch size: 10 , epochs: 500)
+# best params (batch size: 10 , epochs: 500) long computation time , already done

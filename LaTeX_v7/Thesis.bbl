@@ -1,4 +1,4 @@
-\begin{thebibliography}{11}
+\begin{thebibliography}{19}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -102,5 +102,66 @@ A.~Memon, Z.~Gao, B.~Nguyen, S.~Dhanda, E.~Nickell, R.~Siemborski, and
 \newblock This paper served as a guideline to get to know how much volume of
   code changes a company the scale of Google has to handle. Also this source
   provides different complementary points of view of these types of systems.
+
+\bibitem[Han et~al.(2011)Han, Kamber, and Pei]{HanDataMining}
+J.~Han, M.~Kamber, and J.~Pei.
+\newblock \emph{Data Mining: Concepts and Techniques}.
+\newblock Morgan Kaufmann Publishers Inc., San Francisco, CA, USA, 3rd edition,
+  2011.
+\newblock ISBN 0123814790.
+
+\bibitem[Kamei et~al.(2013)Kamei, Shihab, Adams, Hassan, Mockus, Sinha, and
+  Ubayashi]{kameiJIT}
+Y.~Kamei, E.~Shihab, B.~Adams, A.~E. Hassan, A.~Mockus, A.~Sinha, and
+  N.~Ubayashi.
+\newblock A large-scale empirical study of just-in-time quality assurance.
+\newblock \emph{Software Engineering, IEEE Transactions on}, 39:\penalty0
+  757--773, 06 2013.
+\newblock \doi{10.1109/TSE.2012.70}.
+
+\bibitem[{Yang} et~al.(2015){Yang}, {Lo}, {Xia}, {Zhang}, and {Sun}]{yangJIT}
+X.~{Yang}, D.~{Lo}, X.~{Xia}, Y.~{Zhang}, and J.~{Sun}.
+\newblock Deep learning for just-in-time defect prediction.
+\newblock In \emph{2015 IEEE International Conference on Software Quality,
+  Reliability and Security}, pages 17--26, 2015.
+
+\bibitem[Mehta et~al.(2019)Mehta, Bukov, Wang, Day, Richardson, Fisher, and
+  Schwab]{ml_phys}
+P.~Mehta, M.~Bukov, C.-H. Wang, A.~G. Day, C.~Richardson, C.~K. Fisher, and
+  D.~J. Schwab.
+\newblock A high-bias, low-variance introduction to machine learning for
+  physicists.
+\newblock \emph{Physics Reports}, 810:\penalty0 1–124, May 2019.
+\newblock ISSN 0370-1573.
+\newblock \doi{10.1016/j.physrep.2019.03.001}.
+\newblock URL \url{http://dx.doi.org/10.1016/j.physrep.2019.03.001}.
+
+\bibitem[Shalizi(2012)]{shalizi}
+C.~R. Shalizi.
+\newblock Advanced data analysis from an elementary point of view.
+\newblock In \emph{Advanced Data Analysis from an Elementary Point of View},
+  2012.
+
+\bibitem[Moore~II(1987)]{DTform}
+D.~H. Moore~II.
+\newblock Classification and regression trees, by leo breiman, jerome h.
+  friedman, richard a. olshen, and charles j. stone. brooks/cole publishing,
+  monterey, 1984,358 pages, \$27.95.
+\newblock \emph{Cytometry}, 8\penalty0 (5):\penalty0 534--535, 1987.
+\newblock \doi{10.1002/cyto.990080516}.
+\newblock URL
+  \url{https://onlinelibrary.wiley.com/doi/abs/10.1002/cyto.990080516}.
+
+\bibitem[Nielsen(2018)]{nielsenneural}
+M.~A. Nielsen.
+\newblock Neural networks and deep learning, 2018.
+\newblock URL \url{http://neuralnetworksanddeeplearning.com/}.
+
+\bibitem[Eremenko and Ponteves(2017)]{udemyDS}
+K.~Eremenko and H.~d. Ponteves.
+\newblock \emph{Deep Learning A-Z}.
+\newblock SuperDataScience, 2017.
+\newblock URL
+  \url{https://www.udemy.com/course/deeplearning/learn/lecture/6753756#notes}.
 
 \end{thebibliography}

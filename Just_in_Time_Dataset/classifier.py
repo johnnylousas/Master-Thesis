@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from imblearn.over_sampling import SMOTE
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression, LogisticRegressionCV
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split, cross_val_score
@@ -12,6 +13,9 @@ import preprocess as prep
 
 
 # Higly correlated feature elimination
+from xgboost import XGBClassifier
+
+
 def compute_data_drop(data, threshold: float):
     """
     Finds highly correlated columns (defined by threshold) and drops them, leaving the first one.
@@ -295,6 +299,74 @@ class Classifier:
                                      'accuracy', percentage=True)
         plt.show()
 
+    def random_forest(self, maxdepth:int = 20, estim: int = 40, minsplit: float = 0.2, criterion: str = 'entropy'):
+        print('#===============')
+        print('Random Forest Model')
+        rf = RandomForestClassifier(max_depth=maxdepth, random_state=41, max_features='sqrt',
+                                    min_samples_split=minsplit, n_estimators=estim, criterion=criterion)
+        rf.fit(self.trnX, self.trnY)
+        prdY = rf.predict(self.tstX)
+
+        accuracies = cross_val_score(estimator=rf, X=self.trnX, y=self.trnY, cv=10, n_jobs=-1)
+        mean = accuracies.mean()
+        variance = accuracies.std()
+        print('cross_validation')
+        print('     ', 'mean', mean, 'variance', variance)
+
+        yvalues = metrics.accuracy_score(self.tstY, prdY)
+        print('test set accuracy')
+        print('     ', yvalues)
+
+        cnf_mtx = metrics.confusion_matrix(self.tstY, prdY, self.labels)
+        print('confusion matrix')
+        print(cnf_mtx)
+
+    def improve_RF(self, nr_folds: int = 10):
+        n_estimators = [5, 10, 25, 50, 75, 100, 150, 200, 250, 300]
+        max_depths = [5, 10, 25, 50]
+        max_features = ['sqrt', 'log2']
+
+        plt.figure()
+        fig, axs = plt.subplots(1, 2, figsize=(10, 4), squeeze=False)
+        for k in range(len(max_features)):
+            f = max_features[k]
+            values = {}
+            for d in max_depths:
+                yvalues = []
+                for n in n_estimators:
+                    rf = RandomForestClassifier(n_estimators=n, max_depth=d, max_features=f)
+                    dt_fit = rf.fit(self.trnX, self.trnY)
+                    prdY = rf.predict(self.tstX)
+                    scores = cross_val_score(dt_fit, self.trnX, self.trnY, cv=nr_folds)
+                    yvalues.append(scores.mean())
+                values[d] = yvalues
+            func.multiple_line_chart(axs[0, k], n_estimators, values, 'Random Forests with %s features' % f,
+                                     'nr estimators',
+                                     'accuracy', percentage=True)
+
+        plt.show()
+
+    def xgboost(self, booster: str = 'gbtree'):
+        print('#===============')
+        print('Gradient Boosting Model')
+        xgb = XGBClassifier(booster=booster)
+        xgb.fit(self.trnX, self.trnY)
+        prdY = xgb.predict(self.tstX)
+
+        accuracies = cross_val_score(estimator=xgb, X=self.trnX, y=self.trnY, cv=10, n_jobs=-1)
+        mean = accuracies.mean()
+        variance = accuracies.std()
+        print('cross_validation')
+        print('     ', 'mean', mean, 'variance', variance)
+
+        yvalues = metrics.accuracy_score(self.tstY, prdY)
+        print('test set accuracy')
+        print('     ', yvalues)
+
+        cnf_mtx = metrics.confusion_matrix(self.tstY, prdY, self.labels)
+        print('confusion matrix')
+        print(cnf_mtx)
+
     def ann(self):
         # Importing the Keras libraries and packages
         import keras
@@ -400,8 +472,12 @@ classifier.preprocess(opt='minmax')
 classifier.preprocess(opt='fs', k=2)
 
 # Model Application
-classifier.logistic_regression()
-classifier.decision_tree()
+#classifier.logistic_regression()
+#classifier.decision_tree()
+#classifier.random_forest()
+#classifier.xgboost()
+
+classifier.improve_RF()
 
 # classifier.ann()
 # classifier.eval_ann()

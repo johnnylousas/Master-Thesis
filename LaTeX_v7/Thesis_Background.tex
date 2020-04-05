@@ -339,8 +339,9 @@ Then, because data is not easily separable,i.e. partitions not often contain ele
 G(D,\theta) = \frac{n_{left}}{N_l}H(G(D_{left},\theta)) + \frac{n_{right}}{N_l}H(G(D_{right},\theta)) 
 \end{equation}
 
-where $n_{left}$ is the number of attributes partitioned to the left, $n_{right}$ to the right and $N_m$ the total number of attributes in a node. The function H() is commonly defined as Gini Impurity: 
+where $n_{left}$ is the number of attributes partitioned to the left, $n_{right}$ to the right and $N_m$ the total number of attributes in a node. The function H() is commonly defined \\
 
+as Gini Impurity: 
 \begin{equation}
 	H(D_m) = \sum_k p_{mk}(1-p_{mk})
 \end{equation}
@@ -415,7 +416,6 @@ There is a problem related to the sensitivity the perceptron has when $w \cdot x
 	\caption{Comparative analysis of different activation functions (made in Python))}
 	\label{perceptron}
 \end{figure} 
-
 In the first image, the transition from 0 to 1 is abrupt and steep, this way values that are close to the threshold can have dramatic distinctions in output and that is not desirable, because NN's learn by making little adjustments on the values of the weights. By using the sigmoid function values are smoothed out in a way that values no longer have a binary outcome, but rather a continuous and  progressive approximation to the values zero or one. For high positive inputs, the output is very close to one, the same happens for high negatives close to 0 (like in the step function case) and in between the curve is softer, also the sigmoid function in differentiable in all its domain. The third case corresponds to the rectifier function that only activates for positive values and due to its easy implementation, its usage because relevant in reaching high performance.
 
 \subsubsection{NN architecture }
@@ -444,7 +444,6 @@ As mentioned above, the desired result is achieved once the difference between t
 
 In this formula, one sees that it is close to zero, exactly when the predicted value matches the expected value. A possible approach to reach this result could be to brute force the values of the parameters: trying out several combinations of weights and biases, narrowing down in each iteration, eventually converging towards the quadratic value, or the minimum of the cost function. However, this approach does not scale. With just $25$ weights and assuming each weight can have $1,000$ different values, there are $1000^{25} =10^{75}$ possible combinations, which is infeasible to compute, even for modern supercomputers\cite{ml_phys}.
 A more efficient strategy is to use Gradient Descent to minimize the cost function. The first step would be to randomly initialize all the weights and bias, similar to the initial condition of a differential equation, and then calculate the output $\hat{y}$ and compute the cost function. Most likely, it will not yield a result close to the minimum, so now one needs to know is what direction of the curve points towards the minimum and then "jump" a step towards that direction. This is achieved by calculating the gradient of the cost function, with respect to $\theta$.
-
 \begin{align}
 	v_t &= \eta_t \nabla_{\theta} C(Y,\theta) \\
 	\theta_{t+1} &= 	\theta_{t}  - v_t
@@ -495,10 +494,64 @@ In sum, SGD has two very important advantages: not only eliminates the local min
 
 \subsubsection{Backpropagation}
 
-So far, a review of the basic structure and training of NN has been provided: starting from the elementary unit.- the perceptron - up to how many of them can be assembled, covering the most common types of activation functions. Then the concept of forward propagation was introduced along with a cost function that allows to judge whether the model created explains the observations. The goal is to minimise the cost function, resorting, in a first approach, to the gradient descent method which, as seen above, has severe limitations, concluding that the Stochastic Gradient Descent algorithm is most suited for this task. However, SGD still requires us to calculate the derivative of the cost function with respect to every parameter of the NN. So a forward step has to be taken to compute these quantities efficiently. - via the \text{backpropagation} algorithm. - to avoid calculating as many derivatives as there are parameters.
+So far, a review of the basic structure and training of NN has been provided: starting from the elementary unit.- the perceptron - up to how many of them can be assembled, covering the most common types of activation functions. Then the concept of forward propagation was introduced along with a cost function that allows to judge whether the model created explains the observations. The goal is to minimise the cost function, resorting, in a first approach, to the gradient descent method which, as seen above, has severe limitations, concluding that the Stochastic Gradient Descent algorithm is most suited for this task. However, SGD still requires us to calculate the derivative of the cost function with respect to every parameter of the NN. So a forward step has to be taken to compute these quantities efficiently. - via the \text{backpropagation} algorithm. - to avoid calculating as many derivatives as there are parameters. Also backpropagation enables the determination of the contribution of each weight and bias to the cost function, altering more, the weights and biases that contribute the most, thus understanding how changing these particular values will affect the overall behaviour. \cite{nielsenneural}
 
-(formalism to be implemented)
+The algorithm can be summarized into four equations, but first, let us define some notation. Assuming a network composed of $L$ layers with index $l = {1,... L}$ and denote by $w_{j,k}^l$ the weight connecting from the \textit{k-th} neuron of layer \textit{l-1} to the \textit{j-th} neuron in layer \textit{j}. The bias of this neuron is denoted $b_l^j$. By constructing, one can write the activation function $a_j^l$ of the  \textit{j-th} neuron in the  \textit{l-th} layer, by recursively writing the relation to the activation $a_j^{l-1}$ of neurons in the previous layer \textit{l-1}.
 
+\begin{equation}
+a_j^l = \sigma\bigg(\sum_{k}\omega_{j,k}^l a_k^{l-1} + b_j^{l} \bigg) = \sigma(z_j^l)
+\label{first}
+\end{equation}
+
+When calculating the cost function $C$, one only needs to take directly into account the activation from the neurons of layer $L$, of course the influence of the neurons from previous layers is underlying. So one can define the quantity, $ \Delta_j^L$, which is the error of the \textit{i-th} neuron in layer L , as the change it will cause on the cost function $C$, regarding weighted input $z_j^L$:
+
+\begin{equation}
+\Delta_j^L = \frac{\partial C}{\partial z_j^L}
+\end{equation}
+Generally, defining the error of neuron $j$ of any layer $l$ and applying the chain rule to obtain the first equation of the algorithm:
+
+\begin{equation}
+\Delta_j^l = \frac{\partial C}{\partial z_j^l} =  \frac{\partial C}{\partial a_j^l} \frac{\partial a_j^l}{\partial z_j^l} =  \frac{\partial C}{\partial a_j^l} \sigma '(z_j^l)
+\label{backprop1}
+\end{equation}
+
+Now, one can relate the error function $ \Delta_j^L$ to the bias $b_j^{l}$ to obtain the second backpropagation relation:
+
+\begin{equation}
+\Delta_j^L = \frac{\partial C}{\partial z_j^L} = \frac{\partial C}{\partial b_j^l} \frac{\partial b_j^l}{\partial z_j^l} = \frac{\partial C}{\partial b_j^l}
+\label{backprop2}
+\end{equation}
+
+Since, $\frac{\partial b_j^l}{\partial z_j^l} = 1$ , from \ref{first}. 
+Furthermore to find another expression for the error, one can relate the neurons in layer $l$ with the neurons in layer $l+1$: 
+
+\begin{align}
+\Delta_j^l &= \frac{\partial C}{\partial z_j^l} = \sum_k \frac{\partial C}{\partial z_k^{l+1}} \frac{\partial z_k^{l+1}}{\partial z_k^{l}} \\
+&= \sum_k  \Delta_k^{l+1}  \frac{\partial z_k^{l+1}}{\partial z_k^{l}} \\
+&= \bigg( \sum_k  \Delta_k^{l+1} \omega_{k,j}^{l+1}\bigg) \sigma '(z_j^l)
+\label{backprop3}
+\end{align}
+
+This is the third relation. Finally, to derive the final equation, one differentiates the cost function with respect to the weights $\omega_{j,k}^l:$
+
+\begin{equation}
+\frac{\partial C}{\partial \omega_{j,k}^l} =\frac{\partial C}{\partial z_{j}^l}\frac{\partial z_{j}^l}{\partial \omega_{j,k}^l} = \Delta_j^{l} a_k^{l-1}
+\label{backprop4}
+\end{equation}
+
+The combination equations \ref{backprop1}, \ref{backprop2}, \ref{backprop3} and \ref{backprop4}, constitutes the backbone of the backpropagation algorithm that is used to train NN's in a very efficient way \cite{ml_phys}. It described in the following steps:
+
+\textbf{Backpropagation Algorithm:}
+\begin{enumerate}
+	\item \textbf{Activation at input layer} - compute the activations of the input layer $a_j^1$.
+	\item \textbf{Forward propagation} - Through equation \ref{first}, determine the activations $a_j^1$ and the linear weigthed sum $z_j^l$, for each layer $l$.
+ 	\item \textbf{Error at layer $L$} - calculate the error $\Delta_j^L $, using equation \ref{backprop2}.
+	\item \textbf{Propagate the error "backwards"} - calculate the error $\Delta_j^l$, for all layers $l$, using equation \ref{backprop3}. 
+	\item \textbf{Determine gradient} - use equation \ref{backprop2} and \ref{backprop4} to calculate  $\frac{\partial C}{\partial b_j^l}$ and $\frac{\partial C}{\partial \omega_{j,k}^l}$.
+\end{enumerate}
+\cite{ml_phys}
+
+In sum, the application  of this algorithm consists on determining the error at the final layer and then "chain-ruling" our way back to the input layer,find out quickly how the cost function changes, when the weights and biases are altered. \cite{nielsenneural}
 
 
 \subsection{Model Evaluation and Parameter Tuning}

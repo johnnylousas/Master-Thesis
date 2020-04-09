@@ -43,7 +43,7 @@ def undersample(trn_x, trn_y):
     return trn_x, trn_y
 
 
-def FS(trn_x, tst_x, y, k_value, opt: str = f_classif):
+def fs(trn_x, tst_x, y, k_value, opt: str = f_classif):
     fs = SelectKBest(opt, k_value)
     fs.fit(trn_x, y)
     trn_x = fs.transform(trn_x)
@@ -54,7 +54,7 @@ def FS(trn_x, tst_x, y, k_value, opt: str = f_classif):
     return trn_x, tst_x
 
 
-def PrincipalComponentAnalysis(trn_x, tst_x, trn_y, k_value):
+def pComponentAnalysis(trn_x, tst_x, trn_y, k_value):
     pca = PCA(n_components=k_value)
     pca.fit(trn_x, trn_y)
     trn_x = pca.transform(trn_x)

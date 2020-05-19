@@ -1,4 +1,4 @@
-% makeindex style file created by LaTeX for document "Thesis" on 2020-4-5
+% makeindex style file created by LaTeX for document "Thesis" on 2020-5-15
 keyword "\\glossaryentry"
 preamble "\\begin{theglossary}"
 postamble "\n\\end{theglossary}\n"

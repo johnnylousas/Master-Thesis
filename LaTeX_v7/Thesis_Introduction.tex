@@ -14,11 +14,9 @@
 \chapter{Introduction}
 \label{chapter:introduction}
 
-Nowadays, it has become crucial to have an efficient and reliable way to keep track of software changes, specially in large and fast-paced companies \cite{Uber}. In many of them, source-code \textit{"repositories"} are the preferred choice: offering the agility of having access to all historical code versions developed so far, keeping track of the changes that were made. Due to the sheer amount of changes that are made daily, in these kinds of environments, the probability that one of them creates a conflict is significant, leading to a breakage. This is an undesirable situation, since it may lead to development over a defective \textit{"master"} (mainline hereafter) \footnote{a master represents the main history of code versions - i.e. the main branch (described below)  }, so it is critical to rapidly detect and patch what caused the breakage.
+In this chapter, the motivation behind the work is introduced, as well as the problem and the objectives to be achieved. 
 
-A mainline is \textit{"green"}, if all build steps (i.e. compilation, unit tests, User Interface tests) are successfully executed for every change point in history, otherwise it is called \textit{"red"}, and keeping it that way is a key factor to achieve maximum performance \cite{Uber}. However finding a scalable solution, given a constraint of time and computer resources, is a challenging task in order to find a balance between correctness and speed, so there is a high demand for automated techniques to help developers keep the master green.\cite{Ziftci}. The strategy is to collect data from a large company and use heuristics to exploit common patterns that can be learned by machine learning algorithms and then, based on that knowledge, estimate where a breakage, most likely, occurred, and most importantly reduce the time to do so.
 
-There are many ways to configure the architecture of such systems and to manage testing. Therefore, several approaches are compared below. For now, let us start by defining some fundamental concepts needed for the analysis.
 
 %%%%%%%%%%%%%%%%%%
 
@@ -28,22 +26,18 @@ There are many ways to configure the architecture of such systems and to manage 
 \section{Motivation}
 \label{section:motivation}
 
-Relevance of the subject...
 
+
+Given the complexity of modern software systems, it is increasingly crucial to maintain quality and reliability, in a time-saving and cost-effective manner, specially in large and fast-paced companies. This is why many industries adopt a \textit{Continuous Integration} (CI) strategy, which is a popular software development technique where engineers, frequently, incorporate code changes into the mainline codebase, allowing them to easily check that their code can build successfully and pass tests across various system environments \cite{santolucito2018statically}  . The latter task performed in the process is called \textit{regression testing}. To ensure that the introduction of new features or the fix of known failures not only are correct, but also do not obstruct existing functionalities. Ergo, regression testing plays a fundamental role on certifying that newer versions adhere to the mainline.  
+Regression can have many origins, namely code does not compile, performance drops or tests fail, and, as software teams grow, due to the rising amount of changes , the probability that one  creates a conflict is significant. Identifying and amending such regressions constitute one of the most challenging, costly and time-consuming tasks in the software development life-cycle \cite{Ziftci}.
+In the last decades, there has been a high demand for automated techniques that accelerate early fault detection, minimizing human intervention. Regression test prioritization lies at the core of these techniques, as one of the most thriving fields in achieving promising results, with increasing research attention. Aiming to find the optimal permutation of ranked tests that match a certain criteria, i.e. the ability to detect faults \text{a priori}, the likelihood a change has of being merge or a limited time-frame  \cite{palma}. 
+The automation process is accomplished through developing algorithms that are, traditionally, programmed for a certain objective, by obeying a set of well-defined instructions. Many traditional algorithms may have shortcomings and not scale well with the complexity of today's systems. However, in recent years, the field of Artificial Intelligence as been expanding at an astounding pace, fueled by the growth of computer power and the amount of available data. In particular, there is a trend in capitalizing machine learning (ML) algorithms and data-driven approaches to solve these kind of problems  \cite{durelli} . Concretely, in a supervised learning task, given a code change and a list of test cases to be prioritized, test cases can be classified as "pass" or "fail", depending on some set of features and use the result to rank failing tests first.
+In fact, Catal \cite{catal} showed that ML approaches can improve the probability of fault detection, when compared to classic software algorithms. 
+Powerful results have been achieved by several authors: Chen et al. \cite{chen} use semi-supervised K-Means to cluster test cases and then pick a small subset of tests from each cluster, Uber developers \cite{Uber} built a speculation engine powered by Logistic regression to predict failed test cases and more recently, Palma et al. \cite{palma} combined traditional test and similarity-based quality metrics, and Lachmann et al. \cite{lachmannlp} resorted to textual information to extract features from test descriptions written in Natural Language.
+ 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Continuous Integration }
-\label{section:ci}
-
-Continuous Integration (CI) is a popular software development technique that allows developers to easily check that their code can build successfully and pass tests across various system environments.\cite{santolucito2018statically} However, it is not straightforward to develop and configure this methodology, there are numerous approaches and several ways to solve the same problem, which are explored below. The key aspect is to navigate through the options of how to commit and how to test, compare them and acknowledge what features can be leveraged at the expense of others, making it possible to find a scalable solution.
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Repository}
-\label{section:repository}
-
-Provide an overview of the topic to be studied...
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -59,8 +53,14 @@ The objectives delineated for this work are:
 	\SubItem{Provide a Live-Estimate of the Status of a Project}
 	\SubItem{Given a commit, choose which chain of tests minimize pass/fail uncertainty}
 \end{itemize}
-Explicitly state the objectives set to be achieved with this thesis...
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Problem}
+\label{section:repository}
+
+trade off speed vs. correctness, thats the problem.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Thesis Outline}
@@ -68,3 +68,10 @@ Explicitly state the objectives set to be achieved with this thesis...
 
 Briefly explain the contents of the different chapters...
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Repository}
+\label{section:repository}
+
+Provide an overview of the topic to be studied...

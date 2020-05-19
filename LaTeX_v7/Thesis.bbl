@@ -1,9 +1,55 @@
-\begin{thebibliography}{19}
+\begin{thebibliography}{24}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Santolucito et~al.(2018)Santolucito, Zhang, Zhai, and
+  Piskac]{santolucito2018statically}
+M.~Santolucito, J.~Zhang, E.~Zhai, and R.~Piskac.
+\newblock Statically verifying continuous integration configurations, 2018.
+\newblock Paper on technical issues regarding Continuous Integration systems.
+
+\bibitem[Ziftci and Reardon(2017)]{Ziftci}
+C.~Ziftci and J.~Reardon.
+\newblock Who broke the build? automatically identifying changes that induce
+  test failures in continuous integration at google scale.
+\newblock In \emph{Proceedings of the 39th International Conference on Software
+  Engineering: Software Engineering in Practice Track}, ICSE-SEIP ’17, page
+  113–122. IEEE Press, 2017.
+\newblock ISBN 9781538627174.
+\newblock \doi{10.1109/ICSE-SEIP.2017.13}.
+\newblock URL \url{https://doi.org/10.1109/ICSE-SEIP.2017.13}.
+
+\bibitem[Palma et~al.(2018)Palma, Abdou, Bener, Maidens, and Liu]{palma}
+F.~Palma, T.~Abdou, A.~Bener, J.~Maidens, and S.~Liu.
+\newblock An improvement to test case failure prediction in the context of test
+  case prioritization.
+\newblock pages 80--89, 10 2018.
+\newblock \doi{10.1145/3273934.3273944}.
+
+\bibitem[{Durelli} et~al.(2019){Durelli}, {Durelli}, {Borges}, {Endo}, {Eler},
+  {Dias}, and {Guimarães}]{durelli}
+V.~H.~S. {Durelli}, R.~S. {Durelli}, S.~S. {Borges}, A.~T. {Endo}, M.~M.
+  {Eler}, D.~R.~C. {Dias}, and M.~P. {Guimarães}.
+\newblock Machine learning applied to software testing: A systematic mapping
+  study.
+\newblock \emph{IEEE Transactions on Reliability}, 68\penalty0 (3):\penalty0
+  1189--1212, 2019.
+
+\bibitem[Catal(2011)]{catal}
+C.~Catal.
+\newblock Software fault prediction: A literature review and current trends.
+\newblock \emph{Expert Syst. Appl.}, 38:\penalty0 4626--4636, 04 2011.
+\newblock \doi{10.1016/j.eswa.2010.10.024}.
+
+\bibitem[{Chen} et~al.(2011){Chen}, {Chen}, {Zhao}, {Xu}, and {Feng}]{chen}
+S.~{Chen}, Z.~{Chen}, Z.~{Zhao}, B.~{Xu}, and Y.~{Feng}.
+\newblock Using semi-supervised clustering to improve regression test selection
+  techniques.
+\newblock In \emph{2011 Fourth IEEE International Conference on Software
+  Testing, Verification and Validation}, pages 1--10, 2011.
 
 \bibitem[Ananthanarayanan et~al.(2019)Ananthanarayanan, Ardekani, Haenikel,
   Varadarajan, Soriano, Patel, and Adl-Tabatabai]{Uber}
@@ -17,22 +63,16 @@ S.~Ananthanarayanan, M.~S. Ardekani, D.~Haenikel, B.~Varadarajan, S.~Soriano,
   guidelines of future work that can be explored, mainly power their system
   with other machine learning techniques.
 
-\bibitem[Ziftci and Reardon(2017)]{Ziftci}
-C.~Ziftci and J.~Reardon.
-\newblock Who broke the build? automatically identifying changes that induce
-  test failures in continuous integration at google scale.
-\newblock In \emph{Proceedings of the 39th International Conference on Software
-  Engineering: Software Engineering in Practice Track}, ICSE-SEIP ’17, page
-  113–122. IEEE Press, 2017.
-\newblock ISBN 9781538627174.
-\newblock \doi{10.1109/ICSE-SEIP.2017.13}.
-\newblock URL \url{https://doi.org/10.1109/ICSE-SEIP.2017.13}.
-
-\bibitem[Santolucito et~al.(2018)Santolucito, Zhang, Zhai, and
-  Piskac]{santolucito2018statically}
-M.~Santolucito, J.~Zhang, E.~Zhai, and R.~Piskac.
-\newblock Statically verifying continuous integration configurations, 2018.
-\newblock Paper on technical issues regarding Continuous Integration systems.
+\bibitem[Lachmann et~al.(2016)Lachmann, Schulze, Nieke, Seidl, and
+  Schaefer]{lachmannlp}
+R.~Lachmann, S.~Schulze, M.~Nieke, C.~Seidl, and I.~Schaefer.
+\newblock System-level test case prioritization using machine learning.
+\newblock In \emph{2016 15th IEEE International Conference on Machine Learning
+  and Applications (ICMLA)}, pages 361--368, Los Alamitos, CA, USA, dec 2016.
+  IEEE Computer Society.
+\newblock \doi{10.1109/ICMLA.2016.0065}.
+\newblock URL
+  \url{https://doi.ieeecomputersociety.org/10.1109/ICMLA.2016.0065}.
 
 \bibitem[Potvin and Levenberg(2016)]{Potvin:2016:WGS:2963119.2854146}
 R.~Potvin and J.~Levenberg.

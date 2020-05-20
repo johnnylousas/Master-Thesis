@@ -1,0 +1,17 @@
+\babel@toc {english}{}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Average percentage of fault detection \cite {APFD}}}{7}{figure.2.1}% 
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Code repository and workflow at Google. Each CL is submitted to master branch or HEAD \cite {Ziftci}}}{8}{figure.2.2}% 
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Speculation tree - builds and outcomes \cite {Uber}}}{10}{figure.2.3}% 
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Each internal (non-leaf) node represents a test on an attribute. Each leaf node represents a class (if the client is likely to buy the product yes/no )}}{13}{figure.2.4}% 
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Perceptron simple example)}}{16}{figure.2.5}% 
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Comparative analysis of different activation functions (made in Python))}}{17}{figure.2.6}% 
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Architecture example of a NN \cite {nielsenneural}}}{18}{figure.2.7}% 
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Global and Local minimum determination \cite {udemyDS}}}{19}{figure.2.8}% 
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Schematic of some algorithm.}}{26}{figure.4.1}% 
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }

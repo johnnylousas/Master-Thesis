@@ -17,6 +17,9 @@
 ## Metrics
   Classification Results and APFD Metric Results
 
-## scripts
+## Presentations
+  .pptx presentations made along thesis development with results
+
+## Scripts
   Python code.
   

@@ -14,6 +14,6 @@ Inherits from keras.Sequential and generates pairs (file, test, label) where pos
 
 Abstract class to choose which model is going to learn the relationship between files and tests.
 
-## Prioritizer
+### Prioritizer
 
 Child class that inherits from Model.py, implementing Neural Networks Embeddings. Run Prioritizer.py, which contains the main function of the framework.

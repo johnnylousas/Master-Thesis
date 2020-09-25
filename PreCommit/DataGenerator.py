@@ -2,6 +2,8 @@ import random
 import numpy as np
 from tensorflow import keras
 
+random.seed()
+
 
 class DataGenerator(keras.utils.Sequence):
     """
@@ -62,10 +64,10 @@ class DataGenerator(keras.utils.Sequence):
         # Find list of IDs
         pairs_temp = [self.pairs[k] for k in indexes]
         # Generate data
-        X, y = next(self.__data_generation(pairs_temp))
+        X, y = next(self.data_generation(pairs_temp))
         return X, y
 
-    def __data_generation(self, pairs):
+    def data_generation(self, pairs):
         """Generate batches of samples for training"""
         batch = np.zeros((self.batch_size, 3))
 

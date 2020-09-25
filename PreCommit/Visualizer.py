@@ -5,7 +5,7 @@ import seaborn as sns
 import altair as alt
 import numpy as np
 import pandas as pd
-from matplotlib import collections
+import collections
 plt.style.use('fivethirtyeight')
 
 
@@ -129,7 +129,7 @@ class Visualizer:
 
         plt.show()
 
-    def plot_embed_files(self, file, pjs_labels, method='TSNE'):
+    def plot_embed_files(self, file_r, pjs_labels, method='TSNE'):
         projects = [file[1] for file in pjs_labels]
 
         # Remove genres not found
@@ -147,8 +147,8 @@ class Visualizer:
         ints, gen = pd.factorize(projects)
         gen = np.asarray(gen, dtype=object)
 
-        comp_1 = file[idx_include, 0]
-        comp_2 = file[idx_include, 1]
+        comp_1 = file_r[idx_include, 0]
+        comp_2 = file_r[idx_include, 1]
 
         # Plot embedding
         plt.figure(figsize=(12, 10))
@@ -168,7 +168,7 @@ class Visualizer:
 
         plt.show()
 
-    def plot_embed_tests(self, tst_label, test, method='TSNE'):
+    def plot_embed_tests(self, tst_label, test_r, method='TSNE'):
         folders = [test[1] for test in tst_label]
         # Remove genres not found
         folders_counts = self.count_items(folders)
@@ -184,8 +184,8 @@ class Visualizer:
 
         ints, gen = pd.factorize(folders)
 
-        comp_1 = test[idx_include, 0]
-        comp_2 = test[idx_include, 1]
+        comp_1 = test_r[idx_include, 0]
+        comp_2 = test_r[idx_include, 1]
 
         # Plot embedding
         plt.figure(figsize=(12, 10))
@@ -199,8 +199,8 @@ class Visualizer:
             cbar.ax.text(10, (2 * j + 1) / 2.25, lab)
         cbar.ax.set_title('Project', loc='left')
 
-        plt.xlabel(method + ' 1');
-        plt.ylabel(method + ' 2');
+        plt.xlabel(method + ' 1')
+        plt.ylabel(method + ' 2')
         plt.title(method + ' Visualization of Test Embeddings')
 
         plt.show()

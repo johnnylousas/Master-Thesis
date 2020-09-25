@@ -25,7 +25,7 @@ class DataCI(Data, Visualizer):
     revision and combining every single file with every single test.
     """
 
-    def __init__(self, commits, test_details, test_history, mod_files):
+    def __init__(self, commits, test_details, test_history, mod_files, start_date: str = '2019-03-11 00:00:00.000000'):
         """
         Data Class Constructor
         :param commits:
@@ -39,7 +39,7 @@ class DataCI(Data, Visualizer):
         self.mod_files = mod_files
 
         self.transform()
-        self.clean_files()
+        self.clean_files(start_date=start_date)
         self.df_link = self.create_data_input(remove_flaky=True)
         self.clean_tests()
 
@@ -125,13 +125,14 @@ class DataCI(Data, Visualizer):
     def get_data_info(self):
         pass
 
-    def clean_files(self):
+    def clean_files(self, start_date: str = '2019-03-11 00:00:00.000000'):
         """
         Some files present in the data are deprecated or unused. Thus we only want to keep relevant files.
         To do that, only files that have been modified in the past year are stored, otherwise it gets removed.
+        :param start_date: Date threshold to remove modified files
         :return:
         """
-        print(f'Removing files that are not modified in a year...')
+        print(f'Removing files that are not modified since {start_date}')
         all_files = list(self.mod_files['mod_files'].explode().unique())
         print(f'There are {len(all_files)} files before cleaning')
         d = {k: v for v, k in enumerate(all_files)}
@@ -145,7 +146,7 @@ class DataCI(Data, Visualizer):
                                                                         encode_files(x))
 
         self.mod_files['timestamp'] = pd.to_datetime(self.mod_files['timestamp'])
-        dt = pd.to_datetime("2019-03-11 00:00:00.000000")
+        dt = pd.to_datetime(start_date)
         start = self.mod_files['timestamp'].sub(dt).abs().idxmin()
 
         file_list = list(range(0, len(all_files)))

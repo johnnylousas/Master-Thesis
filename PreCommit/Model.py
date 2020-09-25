@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
 
 class Model:
@@ -16,7 +16,7 @@ class Model:
         pass
 
     @abstractmethod
-    def test(self, test_set_size):
+    def test(self, test_set_size, ):
         pass
 
     @abstractmethod
@@ -50,6 +50,15 @@ class Metrics:
         :return: confusion_matrix
         """
         return confusion_matrix(y_true, y_pred)
+
+    def report(self, y_true, y_pred):
+        """
+        Give Classification Report
+        :param y_true:
+        :param y_pred:
+        :return:
+        """
+        return classification_report(y_true, y_pred)
 
     def apfd(self, y_true, y_pred):
         """

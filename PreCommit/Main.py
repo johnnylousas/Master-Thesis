@@ -3,6 +3,11 @@ from Prioritizer import NNEmbeddings
 import pandas as pd
 import matplotlib.pyplot as plt
 
+from mlxtend.frequent_patterns import apriori, fpgrowth
+from mlxtend.frequent_patterns import association_rules
+
+from RNN import RNN
+
 
 def study_start_date(dates):
     acc_train = []
@@ -39,8 +44,33 @@ def study_start_date(dates):
     plt.show()
 
 
-def plot_embeddings():
-    pass
+def arm(df, fgrowth=False):
+    from sklearn.preprocessing import MultiLabelBinarizer
+
+    mlb = MultiLabelBinarizer(sparse_output=True)
+    df = df[['mod_files', 'name']]
+
+    df = df.join(
+        pd.DataFrame.sparse.from_spmatrix(
+            mlb.fit_transform(df.pop('mod_files')),
+            index=df.index,
+            columns=mlb.classes_))
+
+    df = df.join(
+        pd.DataFrame.sparse.from_spmatrix(
+            mlb.fit_transform(df.pop('name')),
+            index=df.index,
+            columns=mlb.classes_))
+    print(df)
+
+    if fgrowth:
+        frequent_itemsets = fpgrowth(df, min_support=0.02, use_colnames=True)
+    else:
+        frequent_itemsets = apriori(df, min_support=0.02, use_colnames=True)
+    print(frequent_itemsets)
+
+    rules = association_rules(frequent_itemsets, metric="lift", min_threshold=0.7)
+    print(rules.head())
 
 
 def main():
@@ -60,10 +90,13 @@ def main():
              '48': '2016-03-11 00:00:00.000000',
              }
 
-    study_start_date(dates)
+    # study_start_date(dates)
 
-    # D = DataCI(commits, test_details, test_status, mod_files)
-    # Prio = NNEmbeddings(D, load=True)
+    D = DataCI(commits, test_details, test_status, mod_files)
+    arm(D.df_link)
+
+    # rnn = RNN(D)
+    # Prio = NNEmbeddings(D)
 
     # TSNE Plots
     # Prio.plot_embeddings()

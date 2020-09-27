@@ -56,6 +56,7 @@ class DataCI(Data, Visualizer):
 
         # create pairs
         self.pairs = self.create_pairs()
+        self.get_most_frequent_pairs()
 
     def transform(self):
         """
@@ -257,7 +258,9 @@ class DataCI(Data, Visualizer):
         from collections import Counter
         x = Counter(self.pairs)
         print(f'Most often pairs {sorted(x.items(), key=lambda x: x[1], reverse=True)[:5]}')
+        print(f'Nr of pairs - {len(self.pairs)}')
+        print(f'Nr of pairs after threshold {len([k for k, v in x.items() if float(v) > 1])}')
+        self.pairs = [k for k, v in x.items() if float(v) >= 2]
 
     def to_csv(self):
         self.df_link.to_csv('../pub_data/df.csv')
-

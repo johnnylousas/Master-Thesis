@@ -52,9 +52,9 @@ class NNEmbeddings(Model, Metrics, Visualizer):
         else:
             self.model = self.build_model(embedding_size=embedding_size, optimizer=optimizer)
 
-        #print(self.crossValidation(nb_epochs=epochs, k_folds=kfolds, save_model=save))
-        # y_true, y_pred = self.test()
-        # self.evaluate_classification(y_true, y_pred)
+        print(self.crossValidation(nb_epochs=epochs, k_folds=kfolds, save_model=save))
+        y_true, y_pred = self.test()
+        self.evaluate_classification(y_true, y_pred)
 
     def build_model(self, embedding_size=50, optimizer='Adam', classification=True):
         """
@@ -81,6 +81,8 @@ class NNEmbeddings(Model, Metrics, Visualizer):
 
         # Merge the layers with a dot product along the second axis (shape will be (None, 1, 1))
         merged = Dot(name='dot_product', normalize=True, axes=2)([file_embedding, test_embedding])
+
+        
 
         # Reshape to be a single number (shape will be (None, 1))
         merged = Reshape(target_shape=[1])(merged)
@@ -135,26 +137,12 @@ class NNEmbeddings(Model, Metrics, Visualizer):
         if save_model:
             self.model.save(self.model_file)
 
-    def test(self, test_set_size=0.2, n_positive=10000, negative_ratio=1.0):
-        test_set = self.Data.pairs[int(test_set_size * self.nr_pairs):]
-
-        test_gen = DataGenerator(pairs=test_set, pairs_set=set(self.Data.pairs),
-                                 n_positive=n_positive, negative_ratio=negative_ratio)
-
-        X, y = next(test_gen.data_generation(test_set))
-
-        pred = self.model.predict(X, steps=len(test_set) // n_positive)
-        pred[pred < 0.5] = 0
-        pred[pred >= 0.5] = 1
-
-        return y, pred
-
-    def crossValidation(self, k_folds=10, nb_epochs=5, n_positive=10000, negative_ratio=1.0, save_model=False):
+    def crossValidation(self, k_folds=10, nb_epochs=10, n_positive=500, negative_ratio=3.0, save_model=False):
         # Training with K-fold cross validation
         kf = KFold(n_splits=k_folds, random_state=None, shuffle=True)
-        kf.get_n_splits(self.Data.pairs)
+        kf.get_n_splits(self.Data.pairs[:int(0.8 * self.nr_pairs)])
 
-        X = np.array(self.Data.pairs)
+        X = np.array(self.Data.pairs[:int(0.8 * self.nr_pairs)])
 
         cv_accuracy_train = []
         cv_accuracy_val = []
@@ -191,8 +179,21 @@ class NNEmbeddings(Model, Metrics, Visualizer):
 
         if save_model:
             self.model.save(self.model_file)
+
         return np.mean(cv_accuracy_train), np.mean(cv_loss_train), \
-               np.mean(cv_accuracy_train), np.mean(cv_loss_val)
+               np.mean(cv_accuracy_val), np.mean(cv_loss_val)
+
+    def test(self, test_set_size=0.2, negative_ratio=3.0):
+        test_set = self.Data.pairs[int(test_set_size * self.nr_pairs):]
+        test_gen = DataGenerator(pairs=test_set, pairs_set=set(self.Data.pairs),
+                                 n_positive=len(test_set), negative_ratio=negative_ratio)
+
+        X, y = next(test_gen.data_generation(test_set))
+        pred = self.model.predict(X)
+
+        pred[pred < 0.5] = 0
+        pred[pred >= 0.5] = 1
+        return y, pred
 
     def evaluate_classification(self, y, pred):
         """

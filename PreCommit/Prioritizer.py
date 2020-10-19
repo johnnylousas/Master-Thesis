@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from sklearn.manifold import TSNE
 import umap
 from sklearn.model_selection import KFold
@@ -9,10 +11,17 @@ from Visualizer import Visualizer
 
 from tensorflow import keras
 import numpy as np
+import pandas as pd
 
 
 def reduce_dim(weights, components=3, method='TSNE'):
-    """Reduce dimensions of embeddings"""
+    """
+    Reduce dimensions of embeddings
+    :param weights:
+    :param components:
+    :param method:
+    :return: TSNE or UMAP element
+    """
     if method == 'TSNE':
         return TSNE(components, metric='cosine').fit_transform(weights)
     elif method == 'UMAP':
@@ -24,12 +33,13 @@ def reduce_dim(weights, components=3, method='TSNE'):
 class NNEmbeddings(Model, Metrics, Visualizer):
     """
     Neural Networks Embeddings model which inherits from abstract class Model and class Metrics.
-    Once it is created, all the data becomes available from DataCI class and there is the possibility of loading a
-    previusly trained model, or to train a new one
+    Once it is created, all the data becomes available from DataCI class and there is the possibility
+    of loading a previously trained model, or to train from scratch.
     """
 
     def __init__(self, D: DataCI, model_file: str = 'model.h5', embedding_size: int = 50, optimizer: str = 'Adam',
-                 epochs: int = 10, kfolds: int = 10, save: bool = False, load: bool = False):
+                 negative_ratio=1, nb_epochs: int = 10, batch_size: int = 10, load: bool = False,
+                 save: bool = False, classification: bool = True):
         """
         NNEmbeddings Class initialization.
         :param D:
@@ -45,16 +55,18 @@ class NNEmbeddings(Model, Metrics, Visualizer):
         self.Data = D
 
         self.model_file = model_file
-        self.nr_pairs = len(self.Data.pairs)
+        self.nr_revision = len(self.Data.pairs)
 
         if load:
             self.model = keras.models.load_model(self.model_file)
         else:
-            self.model = self.build_model(embedding_size=embedding_size, optimizer=optimizer)
+            self.model = self.build_model(embedding_size=embedding_size, optimizer=optimizer,
+                                          classification=classification)
+            self.train(nb_epochs=nb_epochs, batch_size=batch_size, negative_ratio=negative_ratio, save_model=save)
 
-        print(self.crossValidation(nb_epochs=epochs, k_folds=kfolds, save_model=save))
-        y_true, y_pred = self.test()
-        self.evaluate_classification(y_true, y_pred)
+        # print(self.crossValidation(nb_epochs=epochs, k_folds=kfolds, save_model=save))
+        # y_true, y_pred = self.test()
+        # self.evaluate_classification(y_true, y_pred)
 
     def build_model(self, embedding_size=50, optimizer='Adam', classification=True):
         """
@@ -82,8 +94,6 @@ class NNEmbeddings(Model, Metrics, Visualizer):
         # Merge the layers with a dot product along the second axis (shape will be (None, 1, 1))
         merged = Dot(name='dot_product', normalize=True, axes=2)([file_embedding, test_embedding])
 
-        
-
         # Reshape to be a single number (shape will be (None, 1))
         merged = Reshape(target_shape=[1])(merged)
 
@@ -96,15 +106,15 @@ class NNEmbeddings(Model, Metrics, Visualizer):
         # Otherwise loss function is mean squared error
         else:
             model = Model(inputs=[file, test], outputs=merged)
-            model.compile(optimizer=optimizer, loss='mse')
+            model.compile(optimizer=optimizer, loss='mse', metrics=['mae'])
 
         model.summary()
         return model
 
-    def train(self, nb_epochs=15, n_positive=10000, negative_ratio=1, training_set_size=0.8, validation_set_size=0.1,
-              save_model=False, plot=False):
+    def train(self, nb_epochs=10, batch_size: int = 10, negative_ratio=1, save_model=False, plot=False):
         """
         Train model.
+        :param batch_size:
         :param plot: If true accuracy vs loss is plotted for training and validation set
         :param n_positive:
         :param negative_ratio: Ratio of positive vs. negative labels. Positive -> there is link between files.
@@ -116,20 +126,13 @@ class NNEmbeddings(Model, Metrics, Visualizer):
         :return:
         """
         # Generate training set
-        training_set = self.Data.pairs[:int(training_set_size * self.nr_pairs)]
-        validation_set = self.Data.pairs[int(training_set_size * self.nr_pairs):int(training_set_size * self.nr_pairs) +
-                                                                                int(
-                                                                                    validation_set_size * self.nr_pairs)]
+        training_set = self.Data.pairs
 
-        train_gen = DataGenerator(pairs=training_set, pairs_set=set(self.Data.pairs),
-                                  n_positive=n_positive, negative_ratio=negative_ratio)
-
-        val_gen = DataGenerator(pairs=validation_set, pairs_set=set(self.Data.pairs),
-                                n_positive=n_positive, negative_ratio=negative_ratio)
+        train_gen = DataGenerator(pairs=training_set, batch_size=batch_size, nr_files=len(self.Data.all_files),
+                                  nr_tests=len(self.Data.all_tests), negative_ratio=negative_ratio)
 
         # Train
         self.model.fit(train_gen,
-                       validation_data=val_gen,
                        epochs=nb_epochs,
                        verbose=2)
         if plot:
@@ -137,56 +140,77 @@ class NNEmbeddings(Model, Metrics, Visualizer):
         if save_model:
             self.model.save(self.model_file)
 
-    def crossValidation(self, k_folds=10, nb_epochs=10, n_positive=500, negative_ratio=3.0, save_model=False):
-        # Training with K-fold cross validation
-        kf = KFold(n_splits=k_folds, random_state=None, shuffle=True)
-        kf.get_n_splits(self.Data.pairs[:int(0.8 * self.nr_pairs)])
+    def predict(self, pickle_file: str = None):
+        """
+        Makes model prediction for unseen data.
+        :param pickle_file:
+        :return:
+        """
+        apfd = []
+        #fdr = []
+        data = self.Data.df_unseen
+        data = data.explode('name')
+        data = data.explode('mod_files')
 
-        X = np.array(self.Data.pairs[:int(0.8 * self.nr_pairs)])
+        grouped = data.groupby(['revision'])
 
-        cv_accuracy_train = []
-        cv_accuracy_val = []
-        cv_loss_train = []
-        cv_loss_val = []
+        for name, group in grouped:  # for each revision
+            preds_per_files = []
+            tests = group['name'].to_list()
+            labels = []
+            duration = []
+            for t in self.Data.all_tests:
+                duration.append(self.Data.test_duration[t])
+                if t in tests:
+                    labels.append(1)
+                else:
+                    labels.append(0)
+            for row in group.iterrows():  # for each file
+                unseen_pairs = []
+                for t in self.Data.all_tests:  # pair with every test
+                    if row[1]['mod_files'] in self.Data.all_files:
+                        unseen_pairs.append((self.Data.file_index[row[1]['mod_files']], self.Data.test_index[t]))
 
-        i = 1
-        for train_index, test_index in kf.split(X):
-            training_set = X[train_index]
-            validation_set = X[test_index]
+                def generate_predictions(pairs, batch_size):
+                    batch = np.zeros((batch_size, 2))
+                    while True:
+                        for idx, (file_id, test_id) in enumerate(pairs):
+                            batch[idx, :] = (file_id, test_id)
 
-            print("=========================================")
-            print("====== K Fold Validation step => %d/%d =======" % (i, k_folds))
-            print("=========================================")
+                        # Increment idx by 1
+                        idx += 1
 
-            train_gen = DataGenerator(pairs=training_set, pairs_set=set(self.Data.pairs),
-                                      n_positive=n_positive, negative_ratio=negative_ratio)
+                        yield {'file': batch[:, 0], 'test': batch[:, 1]}
 
-            val_gen = DataGenerator(pairs=validation_set, pairs_set=set(self.Data.pairs),
-                                    n_positive=n_positive, negative_ratio=negative_ratio)
+                if unseen_pairs:
+                    x = next(generate_predictions(unseen_pairs, len(unseen_pairs)))
+                    preds_per_files.append(self.model.predict(x))
 
-            # Train
-            h = self.model.fit(train_gen,
-                               validation_data=val_gen,
-                               epochs=nb_epochs,
-                               verbose=2)
+            pred = [max(idx) for idx in zip(*preds_per_files)]  # return maximum score of test
 
-            cv_accuracy_train.append(np.array(h.history['accuracy'])[-1])
-            cv_accuracy_val.append(np.array(h.history['val_accuracy'])[-1])
-            cv_loss_train.append(np.array(h.history['loss'])[-1])
-            cv_loss_val.append(np.array(h.history['val_loss'])[-1])
+            prioritization = [x for _, x in sorted(zip(pred, labels), reverse=True)] # Reorder test case list
+            #duration = [x for _, x in sorted(zip(pred, duration), reverse=True)]
 
-            i += 1
+            apfd.append(self.apfd(prioritization)) # calculate apfd
+            #fdr.append(self.fdr(prioritization, duration))
 
-        if save_model:
-            self.model.save(self.model_file)
+            print(f'APFD -> {np.round(self.apfd(prioritization), 2)}')
+            print(f'FDR -> {np.round(self.fdr(prioritization, duration), 2)}')
 
-        return np.mean(cv_accuracy_train), np.mean(cv_loss_train), \
-               np.mean(cv_accuracy_val), np.mean(cv_loss_val)
+        df = pd.DataFrame({'apfd': apfd},
+                          columns=['apfd'])
 
-    def test(self, test_set_size=0.2, negative_ratio=3.0):
-        test_set = self.Data.pairs[int(test_set_size * self.nr_pairs):]
-        test_gen = DataGenerator(pairs=test_set, pairs_set=set(self.Data.pairs),
-                                 n_positive=len(test_set), negative_ratio=negative_ratio)
+        if pickle_file is not None:
+            df.to_pickle(pickle_file)
+
+        return df
+
+    def test(self, negative_ratio=1.0):
+        # Generate training set
+        test_set = self.Data.unseen_pairs
+
+        test_gen = DataGenerator(pairs=test_set, batch_size=10, nr_files=len(self.Data.all_files),
+                                 nr_tests=len(self.Data.all_tests), negative_ratio=negative_ratio)
 
         X, y = next(test_gen.data_generation(test_set))
         pred = self.model.predict(X)
@@ -206,40 +230,6 @@ class NNEmbeddings(Model, Metrics, Visualizer):
         print(f' Test set accuracy - {np.round(100 * self.accuracy(y, pred), 1)}')
         print(self.report(y, pred))
         print(self.cnf_mtx(y, pred))
-
-    def predict(self, file_list: list, test_list: list):
-        """
-        Makes model prediction for unseen data.
-        :param test_list:
-        :param file_list:
-        :return:
-        """
-        new_pairs = []
-        for t in self.Data.all_tests:
-            for f in file_list:
-                new_pairs.append((self.Data.file_index[f], self.Data.test_index[t]))
-
-        def generate_predictions(pairs, batch_size):
-            batch = np.zeros((batch_size, 2))
-            while True:
-                for idx, (file_id, test_id) in enumerate(pairs):
-                    batch[idx, :] = (file_id, test_id)
-
-                # Increment idx by 1
-                idx += 1
-
-                yield {'file': batch[:, 0], 'test': batch[:, 1]}
-
-        x = next(generate_predictions(new_pairs, len(file_list) * len(self.Data.all_tests)))
-
-        new_pred = self.model.predict(x)
-
-        p = zip(x['file'], x['test'])
-        order = [x for _, x in sorted(zip(new_pred, p), reverse=True)]
-
-        for idx, (file, test) in enumerate(order):
-            if self.Data.index_test[test] in test_list:
-                print(f'relevant test {self.Data.index_test[test]} at index - {idx}')
 
     def extract_weights(self, name):
         """
@@ -287,8 +277,9 @@ class NNEmbeddings(Model, Metrics, Visualizer):
         tst = []
         for row in self.Data.df_link.iterrows():
             for item in row[1]['name']:
-                if len(item.split('_')) > 3:
-                    tst.append((item, item.split('_')[2]))
+                label = item.split('_')
+                if len(label) > 2:
+                    tst.append((item, label[2]))
                 else:
                     tst.append((item, 'Other'))
         return list(set(tst))
@@ -319,7 +310,60 @@ class NNEmbeddings(Model, Metrics, Visualizer):
             file_r, _ = self.get_components(method=method)
             self.plot_embed_files(file_r=file_r, pjs_labels=file_labels, method=method)
 
-    def parameter_tuning(self):
-        pass
+    def plot_model(self, show_shapes: bool = True):
+        """
+        Plots and saves Keras model schema
+        :param show_shapes:
+        :return:
+        """
+        keras.utils.plot_model(
+            self.model,
+            to_file="model.png",
+            show_shapes=show_shapes
+        )
 
+    def crossValidation(self, k_folds=10, nb_epochs=10, n_positive=500, negative_ratio=3.0, save_model=False):
+        # Training with K-fold cross validation
+        kf = KFold(n_splits=k_folds, random_state=None, shuffle=True)
+        kf.get_n_splits(self.Data.pairs)
+        X = np.array(self.Data.pairs)
 
+        cv_accuracy_train = []
+        cv_accuracy_val = []
+        cv_loss_train = []
+        cv_loss_val = []
+
+        i = 1
+        for train_index, test_index in kf.split(X):
+            training_set = X[train_index]
+            validation_set = X[test_index]
+
+            print(training_set)
+            exit()
+
+            print("=========================================")
+            print("====== K Fold Validation step => %d/%d =======" % (i, k_folds))
+            print("=========================================")
+
+            train_gen = DataGenerator(pairs=training_set, negative_ratio=negative_ratio)
+
+            val_gen = DataGenerator(pairs=validation_set, negative_ratio=negative_ratio)
+
+            # Train
+            h = self.model.fit(train_gen,
+                               validation_data=val_gen,
+                               epochs=nb_epochs,
+                               verbose=2)
+
+            cv_accuracy_train.append(np.array(h.history['accuracy'])[-1])
+            cv_accuracy_val.append(np.array(h.history['val_accuracy'])[-1])
+            cv_loss_train.append(np.array(h.history['loss'])[-1])
+            cv_loss_val.append(np.array(h.history['val_loss'])[-1])
+
+            i += 1
+
+        if save_model:
+            self.model.save(self.model_file)
+
+        return np.mean(cv_accuracy_train), np.mean(cv_loss_train), \
+               np.mean(cv_accuracy_val), np.mean(cv_loss_val)

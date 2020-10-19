@@ -108,6 +108,7 @@ class Visualizer:
         fig = plt.figure(figsize=(10, 8))
         fig.tight_layout()
 
+
         f_comp_1 = file[:, 0]
         f_comp_2 = file[:, 1]
         t_comp_1 = test[:, 0]

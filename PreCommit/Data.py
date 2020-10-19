@@ -1,5 +1,6 @@
-import itertools
+import collections
 from abc import abstractmethod
+from collections import defaultdict
 
 import numpy as np
 import pandas as pd
@@ -8,9 +9,15 @@ from Visualizer import Visualizer
 
 
 class Data:
-
+    """
+    Abstract class for Data to solve Test Case Prioritization Problem.
+    """
     @abstractmethod
     def transform(self):
+        pass
+
+    @abstractmethod
+    def create_data_input(self):
         pass
 
     @abstractmethod
@@ -21,32 +28,50 @@ class Data:
 class DataCI(Data, Visualizer):
     """
     Receives, transforms, analyzes and cleans raw data.
-     into pairs of (files, tests), by iterating through every
+    into pairs of (files, tests), by iterating through every
     revision and combining every single file with every single test.
     """
 
-    def __init__(self, commits, test_details, test_history, mod_files, start_date: str = '2019-03-11 00:00:00.000000'):
+    def __init__(self, commits, test_details, test_history, mod_files, start_date: str = '2019-03-11 00:00:00.000000',
+                 threshold: int = 5, threshold_pairs: int = 0, predict_len: int = 100):
         """
-        Data Class Constructor
+        Data Class Constructor: Reads raw data, transforms it, cleans it and reshapes to match desired output.
         :param commits:
         :param test_details:
         :param test_history:
         :param mod_files:
         """
+        # Read data
         self.commits = commits
         self.test_details = test_details
         self.test_history = test_history
         self.mod_files = mod_files
+        self.predict_len = predict_len
+        self.test_duration = pd.Series(self.test_details.duration.values, index=self.test_details.name).to_dict()
 
+        # Data Cleaning
         self.transform()
         self.clean_files(start_date=start_date)
-        self.df_link = self.create_data_input(remove_flaky=True)
-        self.clean_tests()
+        self.df_link = self.create_data_input()
+        self.clean_tests(threshold=threshold)
+
+        # Create input pairs
+        self.df_unseen = self.df_link.tail(self.predict_len) # remove last df rows for predicting on unseen data
+        self.df_link.drop(self.df_link.tail(self.predict_len).index, inplace=True)
+
+        self.pairs = self.create_pairs(data=self.df_link)
+        self.unseen_pairs = self.create_pairs(data=self.df_unseen)
+        self.clean_pairs(threshold_pairs=threshold_pairs)
 
         # count number of distinct directories and files
-        self.all_tests = list(self.df_link.name.explode().unique())
-        self.all_files = list(self.df_link.mod_files.explode().unique())
+        self.all_pairs = [t for k, v in self.pairs.items() for t in v]
+        self.files = [file for file, test in self.all_pairs]
+        self.tests = [test for file, test in self.all_pairs]
 
+        self.all_tests = list(np.unique(self.tests))
+        self.all_files = list(np.unique(self.files))
+
+        # encode files and test to ints
         self.file_index = {file: idx for idx, file in enumerate(self.all_files)}
         self.index_file = {idx: file for file, idx in self.file_index.items()}
 
@@ -54,9 +79,22 @@ class DataCI(Data, Visualizer):
         self.index_test = {idx: test for test, idx in self.test_index.items()}
         print(f'There are {len(self.all_files)} unique files and {len(self.all_tests)}')
 
-        # create pairs
-        self.pairs = self.create_pairs()
-        self.get_most_frequent_pairs()
+        P = {}
+        for k, v in self.pairs.items():
+            if v != []:
+                P[k] = [(self.file_index[t[0]], self.test_index[t[1]]) for t in v]
+        self.pairs = P
+
+        # encode new predictions
+        self.unseen_pairs = self.create_pairs(data=self.df_unseen)
+        for k, v in self.unseen_pairs.items():
+            if v != []:
+                try: # if a file was never seen before
+                    self.unseen_pairs[k] = [(self.file_index[t[0]], self.test_index[t[1]]) for t in v]
+                except Exception:
+                    pass
+
+        self.get_data_info()
 
     def transform(self):
         """
@@ -107,6 +145,11 @@ class DataCI(Data, Visualizer):
                                                                         x.strip("[]").replace("'", "").split(", "))
 
         def get_filename(column):
+            """
+            Filename is of the form ABC/DEF/GHI/JKL and function trims down to GHI/JKL
+            :param column:
+            :return: list
+            """
             import os
             li = []
             for i in column:
@@ -123,9 +166,6 @@ class DataCI(Data, Visualizer):
         self.mod_files['mod_files'] = self.mod_files['mod_files'].apply(
             lambda x: list(pd.unique(x)))  # remove duplicate files on each commit
 
-    def get_data_info(self):
-        pass
-
     def clean_files(self, start_date: str = '2019-03-11 00:00:00.000000'):
         """
         Some files present in the data are deprecated or unused. Thus we only want to keep relevant files.
@@ -133,9 +173,10 @@ class DataCI(Data, Visualizer):
         :param start_date: Date threshold to remove modified files
         :return:
         """
-        print(f'Removing files that are not modified since {start_date}')
+
+        # print(f'Removing files that are not modified since {start_date}')
         all_files = list(self.mod_files['mod_files'].explode().unique())
-        print(f'There are {len(all_files)} files before cleaning')
+        # print(f'There are {len(all_files)} files before cleaning')
         d = {k: v for v, k in enumerate(all_files)}
         index_file = {idx: file for file, idx in d.items()}
 
@@ -174,29 +215,16 @@ class DataCI(Data, Visualizer):
             return idx
 
         self.mod_files['mod_files'] = self.mod_files['mod_files'].apply(lambda t: recover_files(t))
-        print(f"There are {len(list(self.mod_files['mod_files'].explode().unique()))} files after cleaning \n")
-        print(
-            f'Percentage of files removed {np.round(100 * (1 - len(list(self.mod_files["mod_files"].explode().unique())) / len(all_files)), 2)} %')
 
-    def create_data_input(self, remove_flaky: bool = False):
+    def create_data_input(self):
         """
         Creates unified input data for ML algorithm, where columns are (revision, mod_files and test names)
         :return: df
         """
         self.test_history = self.test_history.merge(self.test_details[['name', 'id']], how='inner', left_on='test_id',
                                                     right_on='id')
-        # self.test_history.drop_duplicates(keep='first', inplace=True)   # drop rows where tests are applied more than
-        # once and have the same result
-
-        print(f'\nNumber of tests - {len(list(self.test_history["name"].explode().unique()))}')
-
-        if remove_flaky:
-            self.test_history.drop_duplicates(subset=['revision', 'name'], keep=False, inplace=True)  # remove flaky
-            # tests
-            print(f'Number of non-flaky tests - {len(list(self.test_history["name"].explode().unique()))}')
 
         self.test_history = self.test_history.groupby(['revision'])['name'].apply(', '.join).reset_index()  # by name
-
         self.test_history['revision'] = self.test_history['revision'].astype(int)
         self.test_history = self.test_history.sort_values(by=['revision'])
         self.test_history = self.test_history.reset_index()
@@ -208,59 +236,93 @@ class DataCI(Data, Visualizer):
         df = self.test_history.merge(self.mod_files, how='inner', on='revision')
         return df[['revision', 'mod_files', 'name']]
 
-    def clean_tests(self, threshold: int = 10):
+    def clean_tests(self, threshold: int = 5):
         """
-        Drops tests from data that cause less than threshold transitions, i.e. very stable tests.
+        Drops tests/files from data that cause less than threshold
+        transitions/modifications, i.e. very stable tests/files.
         """
-        import collections
+        col = ['mod_files', 'name']
+        for c in col:
+            # Count test frequency
+            dist = self.df_link[c].explode().values
+            dist = collections.Counter(dist)
 
-        # Count test frequency
-        dist = self.df_link.name.explode().values
-        dist = collections.Counter(dist)
+            # Threshold
+            good_items = [k for k, v in dist.items() if float(v) >= threshold]
 
-        # Threshold
-        good_tests = [k for k, v in dist.items() if float(v) >= threshold]
+            # Remove test below threshold from data
+            def remove_stable_items(t: list):
+                l1 = [x for x in t if x in good_items]
+                if l1:
+                    return l1
+                else:
+                    return None
 
-        print("** Data Cleaning - Removing Stable Tests**")
-        print(f'   Number of tests -> {len(list(self.df_link["name"].explode().unique()))}')
-        print(f'   Threshold -> {10}')
-        print(f'   Percentage of tests above threshold - {np.round(100 * len(good_tests) / len(dist.keys()), 2)}')
-        print(f'   Total number of transitions - {sum(dist.values())}')
-        print(f'   Average number of transitions per test - {sum(dist.values()) / len(dist.keys())}')
+            self.df_link[c] = self.df_link[c].apply(lambda t: remove_stable_items(t))
 
-        # Remove test below threshold from data
-        def remove_stable_tests(t: list):
-            l1 = [x for x in t if x in good_tests]
-            if l1:
-                return l1
-            else:
-                return None
+            # Drop None values
+            self.df_link.dropna(inplace=True)
 
-        print(f'   Data shape - {self.df_link.shape}')
-        self.df_link['name'] = self.df_link['name'].apply(lambda t: remove_stable_tests(t))
+    def create_pairs(self, data):
+        """
+        Each row of the dataset corresponds to 1 revisions, composed of lists of modified files and tests.
+        This function explodes the lists and forms pair-wise combinations between items in both lists.
+        :param data:
+        :return: pairs: dict of tuples of pairs (test, file). Each key is a revision.
+        """
+        data = data.explode('name')
+        data = data.explode('mod_files')
+        grouped = data.groupby(['revision'])
 
-        # Drop None values
-        self.df_link.dropna(inplace=True)
-        print(f'\n   Number of tests after cleaning-> {len(list(self.df_link["name"].explode().unique()))}')
-        print(f'   Data shape - {self.df_link.shape} - after cleaning')
-
-    def create_pairs(self):
-        pairs = []
-        for row in self.df_link.iterrows():
-            pairs.extend(list(itertools.product(row[1]['mod_files'], row[1]['name'])))
-        pairs = list(map(lambda t: (self.file_index[t[0]], self.test_index[t[1]]), pairs))
-
-        print(f'there are {len(set(pairs))} pairs')
+        pairs = defaultdict(list)
+        for name, group in grouped:
+            for row in group.iterrows():
+                pairs[name].append((row[1]['mod_files'], row[1]['name']))
         return pairs
 
-    def get_most_frequent_pairs(self):
-        # Most often pairs
-        from collections import Counter
-        x = Counter(self.pairs)
-        print(f'Most often pairs {sorted(x.items(), key=lambda x: x[1], reverse=True)[:5]}')
-        print(f'Nr of pairs - {len(self.pairs)}')
-        print(f'Nr of pairs after threshold {len([k for k, v in x.items() if float(v) > 1])}')
-        self.pairs = [k for k, v in x.items() if float(v) >= 2]
+    def clean_pairs(self, threshold_pairs: int):
+        """
+        Remove pairs that are very rare, thus very unlikely representing a real connection in the data. They most likely
+        occurred by chance.
+        :param threshold_pairs:
+        :return:
+        """
+        all_tuples = [t for k, v in self.pairs.items() for t in v]
+        C = collections.Counter(all_tuples)
+
+        for k, v in self.pairs.items():
+            self.pairs[k] = [t for t in v if C[t] > threshold_pairs]
+
+    def get_data_info(self):
+        """
+        Prints stats about the transformation steps applied to the raw dataset
+        :return:
+        """
+        # revisions
+        print(f'Nr of Revisions {len(self.pairs)}')
+
+        # Files
+        print(f'\nNumber of Files - {len(self.all_files)}')
+
+        dist = collections.Counter(self.files)
+        mpf = sum(dist.values()) / len(dist.keys())
+        print(f'   Total number of modifications - {sum(dist.values())}')
+        print(f'   Average number of modification per file - {mpf}')
+
+        # Tests
+        print(f'\nNumber of Tests - {len(self.all_tests)}')
+
+        # Count test frequency
+        dist = collections.Counter(self.tests)
+        tpt = sum(dist.values()) / len(dist.keys())
+        print(f'   Total number of transitions - {sum(dist.values())}')
+        print(f'   Average number of transitions per test - {tpt}')
+
+        return mpf, tpt
 
     def to_csv(self):
+        """
+        Converts dataframe to csv.
+        :return:
+        """
         self.df_link.to_csv('../pub_data/df.csv')

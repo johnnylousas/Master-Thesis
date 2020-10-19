@@ -18,5 +18,5 @@ Abstract class to choose which model is going to learn the relationship between 
 
 Child class that inherits from Model.py, implementing Neural Networks Embeddings. Run Prioritizer.py, which contains the main function of the framework.
 
-[!UML](https://github.com/johnnylousas/Master-Thesis/tree/master/PreCommit/ClassDiagramUML.png)
+[!UML](ClassDiagramUML.png)
 

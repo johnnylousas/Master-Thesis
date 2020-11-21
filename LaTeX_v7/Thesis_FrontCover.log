@@ -1,10 +1,11 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2020.2.26)  2 MAR 2020 10:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.11.19)  19 NOV 2020 15:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **Thesis_FrontCover.tex
 (./Thesis_FrontCover.tex
-LaTeX2e <2018-12-01>
+LaTeX2e <2020-02-02> patch level 5
+L3 programming layer <2020-03-06>
 ! Undefined control sequence.
 l.15 \includegraphics
                      [bb=9.5cm 11cm 0cm 0cm,scale=0.29]{IST_A_CMYK_POS}
@@ -122,128 +123,126 @@ Overfull \hbox (20.0pt too wide) in paragraph at lines 17--17
  []
 
 ! Undefined control sequence.
-l.22 \includegraphics
-                     [height=50mm]{Figures/Airbus_A350.jpg}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-Missing character: There is no [ in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no = in font nullfont!
-Missing character: There is no 5 in font nullfont!
-Missing character: There is no 0 in font nullfont!
-Missing character: There is no m in font nullfont!
-Missing character: There is no m in font nullfont!
-Missing character: There is no ] in font nullfont!
-Missing character: There is no F in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no g in font nullfont!
-Missing character: There is no u in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no / in font nullfont!
-Missing character: There is no A in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no b in font nullfont!
-Missing character: There is no u in font nullfont!
-Missing character: There is no s in font nullfont!
-! Missing $ inserted.
-<inserted text> 
-                $
-l.22 \includegraphics[height=50mm]{Figures/Airbus_
-                                                  A350.jpg}
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Extra }, or forgotten $.
-l.22 ...hics[height=50mm]{Figures/Airbus_A350.jpg}
-                                                  
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.23 
-     
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing } inserted.
-<inserted text> 
-                }
-l.23 
-     
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-
-Overfull \hbox (39.14195pt too wide) in paragraph at lines 22--23
- []\OT1/cmr/m/n/10 350\OML/cmm/m/it/10 :jpg[]$ 
- []
-
-! Undefined control sequence.
 l.26 {\FontLb
-              Thesis Title} \\ % <<<<< EDIT TITLE
+              Keeping Master Green } \\ % <<<<< EDIT TITLE
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-Missing character: There is no T in font nullfont!
-Missing character: There is no h in font nullfont!
+Missing character: There is no K in font nullfont!
 Missing character: There is no e in font nullfont!
-Missing character: There is no s in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no p in font nullfont!
 Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no M in font nullfont!
+Missing character: There is no a in font nullfont!
 Missing character: There is no s in font nullfont!
-Missing character: There is no T in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no G in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no n in font nullfont!
+! Undefined control sequence.
+l.28 {\FontMn
+              with Machine Learning} \\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no w in font nullfont!
 Missing character: There is no i in font nullfont!
 Missing character: There is no t in font nullfont!
-Missing character: There is no l in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no M in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
 Missing character: There is no e in font nullfont!
+Missing character: There is no L in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
 ! Undefined control sequence.
 l.31 {\FontMb
-              Candidate Full Name} \\ % <<<<< EDIT NAME
+              João Luís Xavier Barreira Lousada} \\ % <<<<< EDIT NAME
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-Missing character: There is no C in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no n in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no i in font nullfont!
-Missing character: There is no d in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no t in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no F in font nullfont!
+Missing character: There is no J in font nullfont!
+Missing character: There is no o in font nullfont!
+LaTeX Font Info:    Trying to load font information for +cmr on input line 31.
+LaTeX Font Info:    No file cmr.fd. on input line 31.
+
+LaTeX Font Warning: Font shape `/cmr/m/n' undefined
+(Font)              using `/cmr/m/n' instead on input line 31.
+
+! Corrupted NFSS tables.
+wrong@fontshape ...message {Corrupted NFSS tables}
+                                                  error@fontshape else let f...
+l.31 {\FontMb Joã
+                  o Luís Xavier Barreira Lousada} \\ % <<<<< EDIT NAME
+This error message was generated by an \errmessage
+command, so I can't give any explicit help.
+Pretend that you're Hercule Poirot: Examine all clues,
+and deduce the truth by order and method.
+
+
+LaTeX Font Warning: Font shape `/cmr/m/n' undefined
+(Font)              using `OT1/cmr/m/n' instead on input line 31.
+
+Missing character: There is no o in font nullfont!
+Missing character: There is no L in font nullfont!
 Missing character: There is no u in font nullfont!
-Missing character: There is no l in font nullfont!
-Missing character: There is no l in font nullfont!
-Missing character: There is no N in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no X in font nullfont!
 Missing character: There is no a in font nullfont!
-Missing character: There is no m in font nullfont!
+Missing character: There is no v in font nullfont!
+Missing character: There is no i in font nullfont!
 Missing character: There is no e in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no B in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no L in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no a in font nullfont!
+
+Overfull \hbox (10.00003pt too wide) in paragraph at lines 31--31
+ []\/cmr/m/n/10 ~a 
+ []
+
+
+Overfull \hbox (2.77779pt too wide) in paragraph at lines 31--31
+ \/cmr/m/n/10 ^^S^^P 
+ []
+
 ! Undefined control sequence.
 l.33 {\FontSn
               \coverThesis} \\
@@ -277,22 +276,13 @@ or  <return>  to continue without it.
 
 ! Undefined control sequence.
 l.35 {\FontLb
-              Aerospace Engineering} \\ % <<<<< EDIT COURSE
+              Engineering Physics} \\ % <<<<< EDIT COURSE
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-Missing character: There is no A in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no r in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no s in font nullfont!
-Missing character: There is no p in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no c in font nullfont!
-Missing character: There is no e in font nullfont!
 Missing character: There is no E in font nullfont!
 Missing character: There is no n in font nullfont!
 Missing character: There is no g in font nullfont!
@@ -304,6 +294,13 @@ Missing character: There is no r in font nullfont!
 Missing character: There is no i in font nullfont!
 Missing character: There is no n in font nullfont!
 Missing character: There is no g in font nullfont!
+Missing character: There is no P in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no y in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no s in font nullfont!
 ! Undefined control sequence.
 l.37 {\FontSn
               %
@@ -315,7 +312,7 @@ and I'll forget about whatever was undefined.
 
 ! Undefined control sequence.
 l.39  \coverSupervisors
-                       : & Prof. Full Name 1 \\ % <<<<< EDIT NAME
+                       : & Prof. Dr. Rui Dilão \\ % <<<<< EDIT NAME
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -328,27 +325,38 @@ Missing character: There is no r in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no f in font nullfont!
 Missing character: There is no . in font nullfont!
-Missing character: There is no F in font nullfont!
-Missing character: There is no u in font nullfont!
-Missing character: There is no l in font nullfont!
-Missing character: There is no l in font nullfont!
-Missing character: There is no N in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no m in font nullfont!
-Missing character: There is no e in font nullfont!
-Missing character: There is no 1 in font nullfont!
 Missing character: There is no D in font nullfont!
 Missing character: There is no r in font nullfont!
 Missing character: There is no . in font nullfont!
-Missing character: There is no F in font nullfont!
+Missing character: There is no R in font nullfont!
 Missing character: There is no u in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no D in font nullfont!
+Missing character: There is no i in font nullfont!
 Missing character: There is no l in font nullfont!
-Missing character: There is no l in font nullfont!
-Missing character: There is no N in font nullfont!
-Missing character: There is no a in font nullfont!
-Missing character: There is no m in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no E in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no M in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no g in font nullfont!
+Missing character: There is no u in font nullfont!
 Missing character: There is no e in font nullfont!
-Missing character: There is no 2 in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no R in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no b in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+
+Overfull \hbox (5.00005pt too wide) in paragraph at lines 38--41
+ [][] 
+ []
+
 ! Undefined control sequence.
 l.43 {\FontMb
               \coverExaminationCommittee} \\
@@ -471,22 +479,24 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no 3 in font nullfont!
 ! Undefined control sequence.
 l.52 {\FontMb
-              Month Year} \\ % <<<<< EDIT DATE (corresponds to date of oral ...
+              October 2020} \\ % <<<<< EDIT DATE (corresponds to date of ora...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-Missing character: There is no M in font nullfont!
-Missing character: There is no o in font nullfont!
-Missing character: There is no n in font nullfont!
+Missing character: There is no O in font nullfont!
+Missing character: There is no c in font nullfont!
 Missing character: There is no t in font nullfont!
-Missing character: There is no h in font nullfont!
-Missing character: There is no Y in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no b in font nullfont!
 Missing character: There is no e in font nullfont!
-Missing character: There is no a in font nullfont!
 Missing character: There is no r in font nullfont!
+Missing character: There is no 2 in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no 2 in font nullfont!
+Missing character: There is no 0 in font nullfont!
 )
 ! Emergency stop.
 <*> Thesis_FrontCover.tex
@@ -495,11 +505,11 @@ Missing character: There is no r in font nullfont!
 
  
 Here is how much of TeX's memory you used:
- 11 strings out of 492616
- 262 string characters out of 6129481
- 58742 words of memory out of 5000000
- 4031 multiletter control sequences out of 15000+600000
- 3640 words of font info for 14 fonts, out of 8000000 for 9000
+ 34 strings out of 480608
+ 589 string characters out of 5903629
+ 240610 words of memory out of 5000000
+ 16026 multiletter control sequences out of 15000+600000
+ 532338 words of font info for 24 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 18i,6n,12p,168b,143s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 18i,7n,16p,168b,175s stack positions out of 5000i,500n,10000p,200000b,80000s
 !  ==> Fatal error occurred, no output PDF file produced!

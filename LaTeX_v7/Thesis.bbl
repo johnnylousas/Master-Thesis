@@ -1,4 +1,4 @@
-\begin{thebibliography}{24}
+\begin{thebibliography}{34}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -58,10 +58,6 @@ S.~Ananthanarayanan, M.~S. Ardekani, D.~Haenikel, B.~Varadarajan, S.~Soriano,
 \newblock Keeping master green at scale.
 \newblock In \emph{Proceedings of the Fourteenth EuroSys Conference 2019},
   pages 29:1--29:15. ACM, 2019.
-\newblock This source encompasses Uber's repository configuration and explains
-  what's behind their fault detection process. Very well structured paper, with
-  guidelines of future work that can be explored, mainly power their system
-  with other machine learning techniques.
 
 \bibitem[Lachmann et~al.(2016)Lachmann, Schulze, Nieke, Seidl, and
   Schaefer]{lachmannlp}
@@ -107,10 +103,6 @@ Y.~Shin.
 \newblock \emph{Extending the Boundaries in Regression Testing: Complexity,
   Latency, and Expertise}.
 \newblock PhD thesis, King’s College London, 2009.
-\newblock PhD thesis containing refined detail regarding test case management.
-  In a simple, yet very complete way, provides thorough background on several
-  techniques to reduce, select and prioritise the way tests are applied, which
-  corresponds to a significant part this work intents to achieve.
 
 \bibitem[Garey and Johnson(1990)]{NPcomplete}
 M.~R. Garey and D.~S. Johnson.
@@ -165,23 +157,6 @@ X.~{Yang}, D.~{Lo}, X.~{Xia}, Y.~{Zhang}, and J.~{Sun}.
 \newblock In \emph{2015 IEEE International Conference on Software Quality,
   Reliability and Security}, pages 17--26, 2015.
 
-\bibitem[Mehta et~al.(2019)Mehta, Bukov, Wang, Day, Richardson, Fisher, and
-  Schwab]{ml_phys}
-P.~Mehta, M.~Bukov, C.-H. Wang, A.~G. Day, C.~Richardson, C.~K. Fisher, and
-  D.~J. Schwab.
-\newblock A high-bias, low-variance introduction to machine learning for
-  physicists.
-\newblock \emph{Physics Reports}, 810:\penalty0 1–124, May 2019.
-\newblock ISSN 0370-1573.
-\newblock \doi{10.1016/j.physrep.2019.03.001}.
-\newblock URL \url{http://dx.doi.org/10.1016/j.physrep.2019.03.001}.
-
-\bibitem[Shalizi(2012)]{shalizi}
-C.~R. Shalizi.
-\newblock Advanced data analysis from an elementary point of view.
-\newblock In \emph{Advanced Data Analysis from an Elementary Point of View},
-  2012.
-
 \bibitem[Moore~II(1987)]{DTform}
 D.~H. Moore~II.
 \newblock Classification and regression trees, by leo breiman, jerome h.
@@ -197,11 +172,107 @@ M.~A. Nielsen.
 \newblock Neural networks and deep learning, 2018.
 \newblock URL \url{http://neuralnetworksanddeeplearning.com/}.
 
+\bibitem[Mehta et~al.(2019)Mehta, Bukov, Wang, Day, Richardson, Fisher, and
+  Schwab]{ml_phys}
+P.~Mehta, M.~Bukov, C.-H. Wang, A.~G. Day, C.~Richardson, C.~K. Fisher, and
+  D.~J. Schwab.
+\newblock A high-bias, low-variance introduction to machine learning for
+  physicists.
+\newblock \emph{Physics Reports}, 810:\penalty0 1–124, May 2019.
+\newblock ISSN 0370-1573.
+\newblock \doi{10.1016/j.physrep.2019.03.001}.
+\newblock URL \url{http://dx.doi.org/10.1016/j.physrep.2019.03.001}.
+
 \bibitem[Eremenko and Ponteves(2017)]{udemyDS}
 K.~Eremenko and H.~d. Ponteves.
 \newblock \emph{Deep Learning A-Z}.
 \newblock SuperDataScience, 2017.
 \newblock URL
   \url{https://www.udemy.com/course/deeplearning/learn/lecture/6753756#notes}.
+
+\bibitem[Busjaeger and Xie(2016)]{learningfortcp}
+B.~Busjaeger and T.~Xie.
+\newblock Learning for test prioritization: An industrial case study.
+\newblock In \emph{Proceedings of the 2016 24th ACM SIGSOFT International
+  Symposium on Foundations of Software Engineering}, FSE 2016, page 975–980,
+  New York, NY, USA, 2016. Association for Computing Machinery.
+\newblock ISBN 9781450342186.
+\newblock \doi{10.1145/2950290.2983954}.
+\newblock URL \url{https://doi.org/10.1145/2950290.2983954}.
+
+\bibitem[Liang et~al.(2018)Liang, Elbaum, and Rothermel]{liang}
+J.~Liang, S.~Elbaum, and G.~Rothermel.
+\newblock Redefining prioritization: Continuous prioritization for continuous
+  integration.
+\newblock In \emph{Proceedings of the 40th International Conference on Software
+  Engineering}, ICSE ’18, page 688–698, New York, NY, USA, 2018.
+  Association for Computing Machinery.
+\newblock ISBN 9781450356381.
+\newblock \doi{10.1145/3180155.3180213}.
+\newblock URL \url{https://doi.org/10.1145/3180155.3180213}.
+
+\bibitem[Yoo et~al.(2009)Yoo, Harman, and Ur]{Shinyoo}
+S.~Yoo, M.~Harman, and S.~Ur.
+\newblock Measuring and improving latency to avoid test suite wear out.
+\newblock \emph{IEEE International Conference on Software Testing,
+  Verification, and Validation Workshops, ICSTW 2009}, 2009.
+\newblock \doi{10.1109/ICSTW.2009.10}.
+
+\bibitem[Spieker et~al.(2017)Spieker, Gotlieb, Marijan, and Mossige]{Spieker}
+H.~Spieker, A.~Gotlieb, D.~Marijan, and M.~Mossige.
+\newblock Reinforcement learning for automatic test case prioritization and
+  selection in continuous integration.
+\newblock \emph{Proceedings of the 26th ACM SIGSOFT International Symposium on
+  Software Testing and Analysis - ISSTA 2017}, 2017.
+\newblock \doi{10.1145/3092703.3092709}.
+\newblock URL \url{http://dx.doi.org/10.1145/3092703.3092709}.
+
+\bibitem[Wu et~al.(2019)Wu, Yang, Li, and Zhao]{time-window}
+Z.~Wu, Y.~Yang, Z.~Li, and R.~Zhao.
+\newblock A time window based reinforcement learning reward for test case
+  prioritization in continuous integration.
+\newblock In \emph{Proceedings of the 11th Asia-Pacific Symposium on
+  Internetware}, Internetware ’19, New York, NY, USA, 2019. Association for
+  Computing Machinery.
+\newblock ISBN 9781450377010.
+\newblock \doi{10.1145/3361242.3361258}.
+\newblock URL \url{https://doi.org/10.1145/3361242.3361258}.
+
+\bibitem[Sutton and Barto(1998)]{rlintro}
+R.~S. Sutton and A.~G. Barto.
+\newblock \emph{Introduction to Reinforcement Learning}.
+\newblock MIT Press, Cambridge, MA, USA, 1st edition, 1998.
+\newblock ISBN 0262193981.
+
+\bibitem[Pyeatt and Howe(2001)]{dtRL}
+L.~Pyeatt and A.~Howe.
+\newblock Decision tree function approximation in reinforcement learning.
+\newblock 07 2001.
+
+\bibitem[Geron(2017.)]{geron_hands_on}
+A.~Geron.
+\newblock \emph{Hands-on machine learning with Scikit-Learn and TensorFlow :}.
+\newblock O'Reilly,, Beijing, first edition. edition, 2017.
+\newblock Includes QR code.
+
+\bibitem[Chollet et~al.(2015)]{chollet2015keras}
+F.~Chollet et~al.
+\newblock Keras, 2015.
+\newblock URL \url{https://github.com/fchollet/keras}.
+
+\bibitem[Van Der~Maaten(2014)]{tsne}
+L.~Van Der~Maaten.
+\newblock Accelerating t-sne using tree-based algorithms.
+\newblock \emph{J. Mach. Learn. Res.}, 15\penalty0 (1):\penalty0 3221–3245,
+  Jan. 2014.
+\newblock ISSN 1532-4435.
+
+\bibitem[McInnes et~al.(2018)McInnes, Healy, and Melville]{umap}
+L.~McInnes, J.~Healy, and J.~Melville.
+\newblock Umap: Uniform manifold approximation and projection for dimension
+  reduction, 2018.
+\newblock URL \url{https://arxiv.org/pdf/1802.03426.pdf}.
+\newblock cite arxiv:1802.03426Comment: Reference implementation available at
+  http://github.com/lmcinnes/umap.
 
 \end{thebibliography}

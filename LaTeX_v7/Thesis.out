@@ -7,48 +7,68 @@
 \BOOKMARK [1][-]{section*.10}{Glossary}{}% 7
 \BOOKMARK [0][-]{chapter.1}{1 Introduction}{}% 8
 \BOOKMARK [1][-]{section.1.1}{1.1 Motivation}{chapter.1}% 9
-\BOOKMARK [1][-]{section.1.2}{1.2 Objectives}{chapter.1}% 10
-\BOOKMARK [1][-]{section.1.3}{1.3 Repository}{chapter.1}% 11
-\BOOKMARK [1][-]{section.1.4}{1.4 Thesis Outline}{chapter.1}% 12
-\BOOKMARK [0][-]{chapter.2}{2 Background}{}% 13
-\BOOKMARK [1][-]{section.2.1}{2.1 Version Control Systems}{chapter.2}% 14
-\BOOKMARK [2][-]{subsection.2.1.1}{2.1.1 Repository \046 Working Copy}{section.2.1}% 15
-\BOOKMARK [1][-]{section.2.2}{2.2 Mono-repositories vs. Multi-repositories}{chapter.2}% 16
-\BOOKMARK [1][-]{section.2.3}{2.3 Software Testing}{chapter.2}% 17
-\BOOKMARK [1][-]{section.2.4}{2.4 Regression Testing}{chapter.2}% 18
-\BOOKMARK [2][-]{subsection.2.4.1}{2.4.1 Test suite minimisation}{section.2.4}% 19
-\BOOKMARK [2][-]{subsection.2.4.2}{2.4.2 Test Case Selection}{section.2.4}% 20
-\BOOKMARK [2][-]{subsection.2.4.3}{2.4.3 Test case prioritisation}{section.2.4}% 21
-\BOOKMARK [1][-]{section.2.5}{2.5 Approach Exploration}{chapter.2}% 22
-\BOOKMARK [2][-]{subsection.2.5.1}{2.5.1 Naive-approach}{section.2.5}% 23
-\BOOKMARK [2][-]{subsection.2.5.2}{2.5.2 Cumulative Approach}{section.2.5}% 24
-\BOOKMARK [2][-]{subsection.2.5.3}{2.5.3 Change-List Approach}{section.2.5}% 25
-\BOOKMARK [2][-]{subsection.2.5.4}{2.5.4 Always Green Master Approach}{section.2.5}% 26
-\BOOKMARK [1][-]{section.2.6}{2.6 Machine Learning}{chapter.2}% 27
-\BOOKMARK [1][-]{section.2.7}{2.7 Supervised Learning}{chapter.2}% 28
-\BOOKMARK [2][-]{subsection.2.7.1}{2.7.1 Logistic Regression}{section.2.7}% 29
-\BOOKMARK [2][-]{subsection.2.7.2}{2.7.2 Decision Trees}{section.2.7}% 30
-\BOOKMARK [2][-]{subsection.2.7.3}{2.7.3 Ensemble Methods}{section.2.7}% 31
-\BOOKMARK [2][-]{subsection.2.7.4}{2.7.4 Artificial Neural Networks}{section.2.7}% 32
-\BOOKMARK [2][-]{subsection.2.7.5}{2.7.5 Model Evaluation and Parameter Tuning}{section.2.7}% 33
-\BOOKMARK [2][-]{subsection.2.7.6}{2.7.6 AutoEncoders}{section.2.7}% 34
-\BOOKMARK [0][-]{chapter.3}{3 Implementation}{}% 35
-\BOOKMARK [1][-]{section.3.1}{3.1 Synthetic Data Generation}{chapter.3}% 36
-\BOOKMARK [1][-]{section.3.2}{3.2 Numerical Model}{chapter.3}% 37
-\BOOKMARK [1][-]{section.3.3}{3.3 Verification and Validation}{chapter.3}% 38
-\BOOKMARK [0][-]{chapter.4}{4 Results}{}% 39
-\BOOKMARK [1][-]{section.4.1}{4.1 Problem Description}{chapter.4}% 40
-\BOOKMARK [1][-]{section.4.2}{4.2 Baseline Solution}{chapter.4}% 41
-\BOOKMARK [1][-]{section.4.3}{4.3 Enhanced Solution}{chapter.4}% 42
-\BOOKMARK [2][-]{subsection.4.3.1}{4.3.1 Figures}{section.4.3}% 43
-\BOOKMARK [2][-]{subsection.4.3.2}{4.3.2 Equations}{section.4.3}% 44
-\BOOKMARK [2][-]{subsection.4.3.3}{4.3.3 Tables}{section.4.3}% 45
-\BOOKMARK [2][-]{subsection.4.3.4}{4.3.4 Mixing}{section.4.3}% 46
-\BOOKMARK [0][-]{chapter.5}{5 Conclusions}{}% 47
-\BOOKMARK [1][-]{section.5.1}{5.1 Achievements}{chapter.5}% 48
-\BOOKMARK [1][-]{section.5.2}{5.2 Future Work}{chapter.5}% 49
-\BOOKMARK [0][-]{section*.21}{Bibliography}{}% 50
-\BOOKMARK [0][-]{appendix.A}{A Vector calculus}{}% 51
-\BOOKMARK [1][-]{section.A.1}{A.1 Vector identities}{appendix.A}% 52
-\BOOKMARK [0][-]{appendix.B}{B Technical Datasheets}{}% 53
-\BOOKMARK [1][-]{section.B.1}{B.1 Some Datasheet}{appendix.B}% 54
+\BOOKMARK [1][-]{section.1.2}{1.2 Version Control Systems}{chapter.1}% 10
+\BOOKMARK [2][-]{subsection.1.2.1}{1.2.1 Repository \046 Working Copy}{section.1.2}% 11
+\BOOKMARK [1][-]{section.1.3}{1.3 Mono-repositories vs. Multi-repositories}{chapter.1}% 12
+\BOOKMARK [1][-]{section.1.4}{1.4 Continuous Integration}{chapter.1}% 13
+\BOOKMARK [2][-]{subsection.1.4.1}{1.4.1 CI Approaches}{section.1.4}% 14
+\BOOKMARK [1][-]{section.1.5}{1.5 Software Testing}{chapter.1}% 15
+\BOOKMARK [2][-]{subsection.1.5.1}{1.5.1 Regression Testing}{section.1.5}% 16
+\BOOKMARK [1][-]{section.1.6}{1.6 Machine Learning}{chapter.1}% 17
+\BOOKMARK [1][-]{section.1.7}{1.7 State of the Art}{chapter.1}% 18
+\BOOKMARK [2][-]{subsection.1.7.1}{1.7.1 Baseline Approaches}{section.1.7}% 19
+\BOOKMARK [2][-]{subsection.1.7.2}{1.7.2 Code-Coverage Approaches}{section.1.7}% 20
+\BOOKMARK [2][-]{subsection.1.7.3}{1.7.3 History-based Approaches}{section.1.7}% 21
+\BOOKMARK [2][-]{subsection.1.7.4}{1.7.4 Modification-based Approaches}{section.1.7}% 22
+\BOOKMARK [1][-]{section.1.8}{1.8 Test Case Prioritization in Industrial Environments}{chapter.1}% 23
+\BOOKMARK [1][-]{section.1.9}{1.9 Repository}{chapter.1}% 24
+\BOOKMARK [1][-]{section.1.10}{1.10 Objectives \046 Thesis Outline}{chapter.1}% 25
+\BOOKMARK [0][-]{chapter.2}{2 History-based Reinforcement Learning}{}% 26
+\BOOKMARK [1][-]{section.2.1}{2.1 Background}{chapter.2}% 27
+\BOOKMARK [2][-]{subsection.2.1.1}{2.1.1 Formalism}{section.2.1}% 28
+\BOOKMARK [2][-]{subsection.2.1.2}{2.1.2 Notation}{section.2.1}% 29
+\BOOKMARK [2][-]{subsection.2.1.3}{2.1.3 Problem Formulation}{section.2.1}% 30
+\BOOKMARK [2][-]{subsection.2.1.4}{2.1.4 Machine Learning}{section.2.1}% 31
+\BOOKMARK [1][-]{section.2.2}{2.2 RETECS}{chapter.2}% 32
+\BOOKMARK [2][-]{subsection.2.2.1}{2.2.1 Reinforcement Learning for Test Case Prioritization}{section.2.2}% 33
+\BOOKMARK [2][-]{subsection.2.2.2}{2.2.2 Reward functions}{section.2.2}% 34
+\BOOKMARK [2][-]{subsection.2.2.3}{2.2.3 Action Selection}{section.2.2}% 35
+\BOOKMARK [2][-]{subsection.2.2.4}{2.2.4 Memory Representation - Value Functions}{section.2.2}% 36
+\BOOKMARK [1][-]{section.2.3}{2.3 Experimental Setup}{chapter.2}% 37
+\BOOKMARK [2][-]{subsection.2.3.1}{2.3.1 Data Description}{section.2.3}% 38
+\BOOKMARK [2][-]{subsection.2.3.2}{2.3.2 Evaluation Metric}{section.2.3}% 39
+\BOOKMARK [2][-]{subsection.2.3.3}{2.3.3 Fine-Tuning}{section.2.3}% 40
+\BOOKMARK [2][-]{subsection.2.3.4}{2.3.4 Results}{section.2.3}% 41
+\BOOKMARK [2][-]{subsection.2.3.5}{2.3.5 RQ1}{section.2.3}% 42
+\BOOKMARK [2][-]{subsection.2.3.6}{2.3.6 RQ2}{section.2.3}% 43
+\BOOKMARK [2][-]{subsection.2.3.7}{2.3.7 Threats to Validity}{section.2.3}% 44
+\BOOKMARK [0][-]{chapter.3}{3 Identifying File-Test Links with Neural Network Embeddings}{}% 45
+\BOOKMARK [1][-]{section.3.1}{3.1 Background}{chapter.3}% 46
+\BOOKMARK [2][-]{subsection.3.1.1}{3.1.1 Embeddings}{section.3.1}% 47
+\BOOKMARK [2][-]{subsection.3.1.2}{3.1.2 Neural Network Embeddings}{section.3.1}% 48
+\BOOKMARK [1][-]{section.3.2}{3.2 NNE-TCP Approach}{chapter.3}% 49
+\BOOKMARK [2][-]{subsection.3.2.1}{3.2.1 Implementation}{section.3.2}% 50
+\BOOKMARK [1][-]{section.3.3}{3.3 Experimental Setup}{chapter.3}% 51
+\BOOKMARK [2][-]{subsection.3.3.1}{3.3.1 Data Description}{section.3.3}% 52
+\BOOKMARK [2][-]{subsection.3.3.2}{3.3.2 Data Cleaning}{section.3.3}% 53
+\BOOKMARK [2][-]{subsection.3.3.3}{3.3.3 Evaluation Metric}{section.3.3}% 54
+\BOOKMARK [1][-]{section.3.4}{3.4 Results}{chapter.3}% 55
+\BOOKMARK [2][-]{subsection.3.4.1}{3.4.1 Training}{section.3.4}% 56
+\BOOKMARK [2][-]{subsection.3.4.2}{3.4.2 Cross-Validation}{section.3.4}% 57
+\BOOKMARK [2][-]{subsection.3.4.3}{3.4.3 Fine-Tuning}{section.3.4}% 58
+\BOOKMARK [2][-]{subsection.3.4.4}{3.4.4 Entity Representation}{section.3.4}% 59
+\BOOKMARK [2][-]{subsection.3.4.5}{3.4.5 Threats to Validity}{section.3.4}% 60
+\BOOKMARK [0][-]{chapter.4}{4 Conclusions}{}% 61
+\BOOKMARK [1][-]{section.4.1}{4.1 Achievements}{chapter.4}% 62
+\BOOKMARK [1][-]{section.4.2}{4.2 Future Work}{chapter.4}% 63
+\BOOKMARK [0][-]{section*.22}{Bibliography}{}% 64
+\BOOKMARK [0][-]{appendix.A}{A Supervised Learning}{}% 65
+\BOOKMARK [1][-]{section.A.1}{A.1 Decision Trees}{appendix.A}% 66
+\BOOKMARK [2][-]{subsection.A.1.1}{A.1.1 Mathematical formulation}{section.A.1}% 67
+\BOOKMARK [1][-]{section.A.2}{A.2 Artificial Neural Networks}{appendix.A}% 68
+\BOOKMARK [2][-]{subsection.A.2.1}{A.2.1 Perceptron}{section.A.2}% 69
+\BOOKMARK [2][-]{subsection.A.2.2}{A.2.2 Activation Functions}{section.A.2}% 70
+\BOOKMARK [2][-]{subsection.A.2.3}{A.2.3 NN architecture }{section.A.2}% 71
+\BOOKMARK [2][-]{subsection.A.2.4}{A.2.4 Learning with Gradient Descent}{section.A.2}% 72
+\BOOKMARK [2][-]{subsection.A.2.5}{A.2.5 Stochastic Gradient Descent \(SGD\)}{section.A.2}% 73
+\BOOKMARK [2][-]{subsection.A.2.6}{A.2.6 Backpropagation}{section.A.2}% 74

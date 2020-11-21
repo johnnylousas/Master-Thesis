@@ -1,0 +1,297 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                      %
+%     File: Thesis_Implementation.tex                                  %
+%     Tex Master: Thesis.tex                                           %
+%                                                                      %
+%     Author: Andre C. Marta                                           %
+%     Last modified :  2 Jul 2015                                      %
+%                                                                      %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{History-based Reinforcement Learning}
+\label{chapter:paper1}
+
+This section provides the necessary formalism for the Test Case Prioritization Optimization problem .
+
+\section{Background}
+
+Reinforcement Learning (RL) is an adaptive method where an agent learns how to interact with an environment, that responds with reward signals that correspond to the feedback of taking a certain action. These back-and-forth interactions take place continuously: the agent receives some representation of the environment's state and selects actions either from a learned policy or by random exploration.
+Consequently, the environment responds to them and presents new situations to the agent, finding itself in a new state. The main goal is to maximize the cumulative sum of rewards, rather than just immediate ones \cite{rlintro}. More formally, considering a set of discrete time steps, $t = 0, 1, 2 ...$, the representation of the environment's state is defined as $S_t \in S$, where $S$ is the set of possible states. In $S_t$, the agent has the option to select an action $A_t \in A(S_t)$, where $A(S_t)$ corresponds to the set of actions accessible in state $S_t$. By applying $A_t$ to state $S_t$, the agent finds itself, one time step later, in a new state $S_{t+1}$ and a reward $R_{t+1}$ is collected as feedback. 
+\\
+
+
+\subsection{Formalism}
+\subsection{Notation}
+
+The test pool is defined as $T$ and it is composed by the set of test cases $\{t_1, t_2, ..., t_N\}$. For each commit $C_i$, a  test suite $T_i$ can be selected and ordered to be executed, such that $T_i \subset T$. Usually, subsets of $T$ are scheduled when there is a time or resource restriction, otherwise the ordered sequence of all test cases $T_i^{all} = T$ is applied. Note that $T$ does not have an ordering, while both $T_i$ and $T_i^{all}$ are meant to be ordered sequences. Therefore, the definition of a ranking function that acts over all test cases should be defined: $ rank : T_i \to N$, where $rank(t)$ is the index of test case $t$ in $T_i$.
+Each test case $t$ contains information about the duration $t.duration_i$, which is known before execution, and the test status $test.status_i$, only known after execution and it is equal to $1$ if the test has passed, or $0$ if it has failed. In $T_i$, the subset of all failed test cases is denoted $T_i^{fail} = \{ t \in T_i \hspace{0.1cm} s.t. \hspace{0.1cm} t.status_i = 0 \} $. 
+\\
+
+Note that in real world scenarios, there are situations where the cause of failure of a test case is due to exogenous reasons such as stochasticity or hardware problems, so tests  can have multiple status at $C_i$ or in other words, have \textit{flakyness}. For simplicity, if a test is executed more than once in $C_i$, the last execution status is kept. Also it is worth distinguishing between failed test cases and faults: a failure of a test case can be originated due to one or several faults in the system under test, and oppositely a single fault can cause several test cases to fail. In this study, because there is no information available about the actual faults, solely the status of each test case. 
+\\
+
+Lastly, to evaluate the performance on estimating the status of a test case in a commit, we define $p_i(t)$. The overall performance $P_i$ of a test suite $T_i$ can be formulated with any cumulative function over $p_i(t_1), ..., p_i(t_N)$. Concretely, it can be the average of each individual prediction: $\frac{1}{\abs{T_i}}\sum_{t \in T_i}p(t)$
+
+\subsection{Problem Formulation}
+
+The end-goal of Test Case Prioritization is to re-arrange test cases according to a given criteria. Formally speaking, given a test suite $T_i$, the set containing all possible permutations of $T_i$, $PT$, and a function from $PT$ to real numbers $f : PT \rightarrow \mathbb{R}$, $TCP$ aimds to find a subset $T'$ such that $(\forall T_i \in PT: P_i(T_i') \ge P_i(T_i).$ Where $f$ is a real function that evaluates the obtained subset in terms of a selected criteria: code coverage, early or late fault detection, etc \cite{ShinThesis}. For example, having five test cases (A-B-C-D-E), that detect a total of $10$ faults, there are $5! = 120$ possible permutations.
+\\
+
+This formulation does not comprehend the constraint of having a time limit for test execution nor takes into account the history of test executions. To incorporate this information, we need to solve the \textit{Adaptive Test Case Selection Problem} (ATCS). Considering a sequence $T_1, ..., T_{i-1}$ of previously executed test suites, then the \textit{ACTS's} goal is to choose a test suite $T_i$, in order to maximize $P_i(T_i)$ and given a time constraint where $\sum_{t \in T_i} t.duration \le M$, where $M$ is the time allocated to run $T_i$.
+
+\subsection{Machine Learning}
+
+The path to automatically solving a problem entails producing sets of instructions, that turn an input into a desired output, namely, algorithms. Nevertheless, not all problems can be solved by traditional algorithms, due to limited or incomplete information. In our case, we don't know which tests are more likely to uncover failures. It could be the case, that there is not even a single failure. Also a previously failing test case is not an indicator that it will fail again, in the exact same context. Hence, with the rise of data availability, there has been a growing interest to investigate solutions that involve learning from data \cite{durelli}.
+\\
+
+Benjamin Busjaeger et al. \cite{learningfortcp} proposed an optimization mechanism for ranking test cases by their likelihood of revealing failures, in an industrial environment. The ranking model is fed with four features: code coverage, textual similarity, failure history and test age. These features were the used to train a Support Vector Machine Model, resulting in a score function that sorts test cases. More recently, Palma et al. \cite{palma} similarly trained a Logistic Regression model, based on textual test information, for example, the number of methods called or how different two test cases are from each other. Liang et al. \cite{liang} proved that commit-level prioritization, instead of test-level would enhance fault detection rates, on fast-paced software development environments. 
+\\
+
+Another way of achieving effective prioritizating is using Semi-Supervised Learning approaches, like Clustering algorithms. Shin Yoo et al. \cite{Shinyoo} and Chen et al. \cite{chen} endorse coverage-based techniques, claiming that making fast pair-wise comparisons between test cases and grouping them in clusters allows for humans to pick, more straight-forwardly, relevant non-redundant test cases. The assumption being that test cases belonging to the same cluster will have similar behaviour.
+\\
+
+Recently, Spieker et al. \cite{Spieker} were the first to implement a Reinforcement Learning approach to TCP, introducing RETECS. The method prioritizes test cases based on their historical execution results and duration. RETECS has the perk of being an adaptive method in a dynamic environment without compromising speed and efficiency. Applied to three different industrial datasets, according to Spieker et al. \cite{Spieker}, RETECS challenges other existing methods and has caught research attention from other researchers, namely Wu et al.  \cite{time-window}. This work is an extension of the research conducted by the authors described above.
+
+
+\section{RETECS}\label{retecs}
+
+This section describes the algorithm used to solve the ATCS problem, based on the approach developed by Spieker et al. \cite{Spieker} called \textit{Reinforced Test Case Selection} (RETECS). 
+
+
+\subsection{Reinforcement Learning for Test Case Prioritization}
+
+
+In the context of TCP, RETECS prioritizes each test case individually and afterwards a test schedule is created, executed and, finally, evaluated. Each state represents a single test case $t_i \in T_i$ - containing it's duration, the time it was last executed and the previous execution results -  and the set of possible actions is the set of all possible prioritizations a given test case can have in a commit. After all test cases are prioritized and submitted for execution, the respective rewards are attributed based on the test case status. From this reward value, the agent can adapt its strategy for future situations: positive rewards reinforce, whereas negative rewards discourage the current behaviour. The agent-environment interface is depicted in Figure \ref{rlcycle}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=8cm]{figures/rlcycle.png}
+	\caption{Reinforcement Learning applied to TCP cycle of Agent-Environment interactions (adapted from \cite{rlintro})}
+	\label{rlcycle}
+\end{figure}
+
+The RETECS framework has the following characteristics: 
+
+\begin{enumerate}
+	\item \textbf{Model-Free} - has no initial concept of the environment's dynamics and how it's action will affect it.
+	\item \textbf{Online} - learns \textit{on-the-fly}, constantly during its runtime. It is particularly relevant in environments where test failure indicators change over time, so it is adamant to update the agent's strategy.
+\end{enumerate}
+
+
+\subsection{Reward functions}
+
+In a RL problem, the formalization of goals passes by collecting numerical rewards that measure the performance of the agent at a given task. Hence, properly defining a reward function that reflects these goals will steer the agent strategy towards optimality. Within TCP, the goal is to prioritize test cases that will detect faults as early as possible, to minimize the feedback-loop. So we define 3 reward functions: Failure Count, Test-Case Failure and Time-Ranked. 
+
+\subsubsection{Failure-Count Reward}
+
+\begin{equation}
+	reward_{i}^{fail}(t) = \abs{T_i^{fail}} \hspace{0.5cm} (\forall_t \in T_i)
+\end{equation}
+
+The first reward awards all test cases with the number of failed test cases that were executed, therefore the RL agent is directly encouraged to maximize the number of failed test cases. This simple approach considers the test schedule as a whole, by only looking at the number of failures. However by not taking into account which specific test-case was responsible for detecting them, the risk of favouring undesired behavior, such as always including passing test-cases amongst the ones that are failing, or assigning low priorities to test cases that would fail if executed. 
+
+\subsubsection{Test-Case Failure Reward}
+
+\begin{equation}
+	reward_{i}^{tcfail}(t) = \begin{cases} 1 - t.status_i, & \mbox{if } t \in T_i \\ 0, & \mbox{otherwise} \end{cases}
+\end{equation}
+
+The second reward function bridges the gaps identified with Failure Count reward in terms of refinement, by rewarding each test case individually, based on it's status obtained after execution. This approach agrees with the strategy of executing failing test cases and therefore, this action is reinforced, prioritizing them higher. On the other hand, if a passing test case is scheduled, the reward value is equal to zero, not reinforcing nor discouraging its inclusion on the test schedule. Although test-case failure reward is specific to each test-case, it does not explicitly take into account the order in which they are applied. 
+
+
+\subsubsection{Time-Ranked Reward}
+
+\begin{equation}
+	reward_{i}^{time}(t) = \abs{T_i^{fail}} - t.status_i \times \sum_{\substack{t_k \in T_i^{fail} \wedge \\ rank(t) < rank(t_k)}} 1
+\end{equation}
+
+The last reward function deals exactly with including the order of test cases and not only considers it's status, but also it's rank on the schedule. An ideal test schedule ranks every failing test case at the beginning and the passing ones thereafter. This reward explicitly penalizes passing test cases by the number of failing ones ranked after it. While for failing test cases, time-ranked reward reduces to the failure count reward.  
+
+\subsection{Action Selection}
+
+As mentioned earlier, actions can be chosen by relying on a learned policy or by random exploration. The policy is a function that maps states, i.e. test cases, to actions, i.e. a prioritization. For a state $s \in S$ and an action $a \in A(s)$, the policy $\pi$ yields the probability $\pi(a|s)$ of taking action $a$ when in state $s$. Therefore, the policy function $\pi$ is arbitrarily close to the optimal policy. In the beginning, high exploration is encouraged to explore the unknown environment and adjust by \textit{trial-and-error}, whereas in a later phase, as learned policies become more reliable, the exploration rate is reduced. However, it is not annulled. The exploration rate can be tuned depending on how dynamic the environment is. This type of algorithm is denoted as $\epsilon -greedy$. The degree of exploration is governed by the parameter $\epsilon$ and actions are picked from the learned policy with $(1-\epsilon)$ probability.
+
+\subsection{Memory Representation - Value Functions}
+
+Commonly in RL algorithms it is useful to know how good it is for an agent to perform a given action in a given state, by estimating what will be the rewards to receive in the future \cite{rlintro}. These estimates are calculated by defining a \textit{value-function} $v_{\pi}(s)$ with respect to the learned policy $\pi$ and can be learned from experience. For example, if an agent follows a policy $\pi$ and for each state encountered an average of the obtained rewards is mantained, after a while, the average will converge to the state's actual value $v_{\pi}(s)$ as the number of encounters reaches infinity. However, with an increasing number of states it may not be practical to keep record of each state individually, instead $v_{\pi}(s)$ should be a parameterized function, whose parameters should be adjusted with experience in order to match observations. These type of parameterized functions are called \textit{approximators} and are used to store the returns of observed states and generalize to unseen ones. Generalization reduces the amount of memory needed to store and time needed to update information about every single state, even though these values correspond to estimations rather than observed values.
+\\
+
+The topic of function approximation is an instance of \textit{supervised learning}, because it gathers examples and attempts to optimize parameters to construct an approximation of the entire function. \cite{rlintro}.
+A valid example for such function is the Artificial Neural Network (ANN), where the parameters to be adjusted are the network's weigths. The downside of ANN's is that a more complex configuration is implied to achieve highest performance.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\columnwidth]{figures/dtRL.png}
+	\caption{Represent state space regions with Decision Trees (Adapted from \cite{dtRL})}
+	\label{dt}
+\end{figure}
+
+Alternatively, Figure \ref{dt} shows how a Decision Tree can be used to map an input vector, i.e. a state, to one of the leaf nodes that points to a specific region in the state space. Then the RL agent is able to learn the values of taking each path/actions and where they will lead. \cite{dtRL}
+
+\section{Experimental Setup}\label{exp}
+
+The next section presents the application and evaluation of RETECS, describing, first, the setup procedures as well as a description of the datasets used (section \ref{data}. Then an overview of possible evaluation metrics to assess the framework's performance is provided \ref{eval}. To maximize these metrics, fine-tuning is used to find the best combination of parameters and it is shown in section \ref{tune}. Finally, in section \ref{results}, results obtained are presented and discussed, according to the research question formulated below. Additionally, threads and future work are discussed to close the evaluation process.
+\\
+
+\textbf{RQ1}: How will RETECS behave in the presence of a novel dataset with different characteristics ? With which Machine Learning Algorithm works best as an approximator function ? We compare the RETECS performance against two different models: Artificial Neural Networks and Decision Trees.
+\\
+
+\textbf{RQ2}: How is RETECS model performance compared to traditional prioritization techniques, in the new context?
+
+\subsection{Data Description}\label{data}
+
+Data used in this work corresponds to industrial real-world environments, from ABB Robotics Norway \footnote{Website: http://new.abb.com/products/robotics}, \textit{Paint Control} and \textit{IOF/ROL} that test complex industrial robots and \textit{BNP} data, corresponding to the financial sector. Each dataset contains historical information of test results, around 300 commits, and have different characteristics. Table \ref{datasets} summarizes main statistics about the datasets.
+%comments
+
+\begin{table}[H]
+	\begin{tabular}{lrrrr}
+		\hline
+		Data Set      & Test Cases & Commits & Test Executions & Failed     \\ \hline
+		IOF/ROL       & 2,086      & 320     & 30,319          & 28.43 $\%$ \\
+		Paint Control & 114        & 312     & 25,594          & 19.36 $\%$ \\
+		BNP           & 1,379      & 303     & 417,837         & 63.87 $\%$ \\ \hline
+	\end{tabular}
+	\caption{Dataset Statistics}
+	\label{datasets}
+\end{table}
+
+The datasets are alike in number of commits, but it is clear that the testing strategy is constrastive. The IOF/ROL dataset contains the least amount of test executions facing the number of test cases it has on the system, meaning that the strategy is much more focused on test case selection. As for the BNP dataset, the number of test executions is equal to the number of test cases times the number of commits. So there is no test case selection and every test is applied on each commit and that is why the rate of failed test is higher relative to the other two datasets. 
+
+
+\subsection{Evaluation Metric}\label{eval}
+
+The common metric to evaluate the framework's performance is the NAPFD ( Normalized Average Percentage of Fault Detection), as defined by Spieker et al. \cite{Spieker} and it represents the most recurrent metric to assess the effectiveness of test-case prioritization techniques. Usually the metric appears in the unnormalized form (APFD) where there is no test case selection. In this case, it includes the ratio between found and possible failures within the test suite. 
+
+\begin{gather*}
+	NAPFD(T_i) = p - \frac{\sum_{\substack{t \in T_i^{fail}}} rank(t)}{\abs{T_i^{fail}} \times \abs{T_i}} + \frac{p}{2 \times \abs{T_i}} \\
+	\text{with $p = \frac{\abs{T_i^{fail}}}{\abs{T_i^{total fail}}}$}
+\end{gather*}
+
+When $p=1$, all possible faults will be detected and $NAPFD$ reduces to its original formulation, APFD. The higher it's value, the higher the quality of the test schedule. If equal to $1$, all relevant test are applied in order, in the beginning, and if it equal to $0$, every relevant test is applied at the end of the schedule.
+
+\subsection{Fine-Tuning}\label{tune}
+
+Parameter tuning allows to find the best combination of parameters that maximize the performance of the RL agent, while providing necessary flexibility to adapt to different environments. 
+For the IOF/ROL and PaintControl datasets the same configuration as Spieker et al. \cite{Spieker} was used to replicate the same results, for the network agent. 
+
+\textbf{ANN Tune:} For the BNP dataset the architecture of the hidden layer for the Network Agent was studied, by calculating the NAPFD with different configurations, like depicted below.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\columnwidth]{figures/rq0_hidden_size_bnp.eps}
+	\caption{ANN Approximator - Hidden Layer architecture}
+	\label{hidden}
+\end{figure}
+
+The default value used for the other datasets is $12$ nodes with one hidden layer. In Figure \ref{hidden}, the configurations that maximizes the metric are: 1 layer with 32 nodes; 1 layer with 100 nodes and 2 layer with 100 nodes each. Since the performances are similar, the simplest architecture is chosen: 1 layer with 32 nodes.
+\\
+
+\textbf{Decision Tree Tune}: The parameters to be tuned in Decision Trees are: (1) \textit{criterion}, (2) \textit{maximum depth} and (3) the  \textit{minimum samples}. (1) measures the quality of a split, where the options are \textit{gini} for the Gini impurity or \textit{entropy} for the information gain; (2) is the distance between the root node and the leaf node, if depth is infinite the nodes are expanded until all are pure, and (3) is the number needed to split a node in the tree. The variation of these parameters was studied by running a grid search and evaluating the performance for the BNP dataset.
+\\
+
+\begin{figure}[htp]
+	\centering
+	\includegraphics[width=\columnwidth]{figures/rq0_depth_min_sample.pdf}
+	\caption{DT Approximator - Parameter Tuning}
+	\label{dtparams}
+\end{figure}
+
+
+From Figure \ref{dtparams}, it is clear that there is no significant difference in performance by varying the criterion. Also there is no clear correlation between better performance and the number of minimum samples, which can be due to the reduced number of combinations and range of values. As for the depth, there is a slight increase in performance as the maximum depth increases. Still the best combination of parameter being: gini criterion, a maximum depth of $20$ and the minimum number of samples to split is $3$. The configuration is maintained throughout the following experiments.
+\\
+
+\textbf{History-Length} determines how long the execution history should be. A short history-length may not suffice to empower the agent to make meaningful future predictions, although the most recent results are most likely the more relevant. A larger history-length may encapsulate more failures and provide more fruitful information. However, having a larger history increases the state space and therefore the complexity of the problem, taking longer to converge into an optimal strategy. Moreover, the oldest history record has the same weight as the most recent. Hence, there is no guarantee that a longer execution history will lead to a performance boost. Figure \ref{hlen} studies how different history length values affect the RL agent, with BNP data. It is noticeable that there is no direct relationship between the two quantities depicted in Fig \ref{hlen}. The best result obtained is a history-length of $25$ executions, which is disparate from the optimal history lenght obtained by Spieker et al. \cite{Spieker} for the other two datasets, which as $4$. This reinforces the fact that BNP data has dissimilar characteristics.
+
+\begin{figure}[htp]
+	\centering
+	\includegraphics[width=\columnwidth]{figures/rq0_history_length.eps}
+	\caption{History Length}
+	\label{hlen}
+\end{figure}
+
+
+\subsection{Results} \label{results}
+
+The experiments are calculated for two RL agents. The first resorts to an ANN representation of states, while the second uses a Decision Tree. On both cases, the reward function varies between: failure count, test-case failure and time ranked. For each test agent, test-cases are scheduled in descending order of priority and until the time limit is reached, if there is one.
+Traditional prioritization methods were included as a mean of comparison: \textit{Random, Sorting and Weighting}.
+\\
+
+ The first consists on assigning random prioritization to each test case, to form the baseline method. The other two methods are deterministic. The Sorting method sorts each test case according to their most recent status, i.e. if a test case failed recently it has high priority. The third method is a naive version of RETECS without adaptation, because it considers the same information - duration, last run and execution history - but as a weigthed sum with equal weights. 
+\\
+
+Due to the fact that RETECS has online learning properties, the evaluation metric NAPFD is measured on each commit and due to the exploratory nature of the algorithm, randomness is taken into account by iterating through the experiments 30 times. If not stated otherwise, reported results show the mean value of all iterations.
+\\
+
+For reproducibility and feedback  purposes, the upgraded version of RETECS is implemented here \footnote{https://github.com/jlousada315/RETECS}, in Python using scikit-learns toolbox for ANN's and Decision Trees. 
+
+\subsection{RQ1}
+
+Figure \ref{rq1} shows a comparison of the prioritization performance between the ANN Agent and the Decision Tree Agent, with regards to different reward functions (rows), applied to three different datasets (columns). On the x-axis, the commit identifier is represented and for each one there is a correspondent NAPFD value, ranging from $0$ to $1$. (represented as a line plot in red and blue). The straight lines show the overall trend of each configuration, which is obtained by fitting a linear function - full line for Network and dashed line for Decision Tree Approximator. 
+\\
+
+%What factors affect APFD ? 
+It is noticeable that both the approximator used for memory representation and the choice of the reward function have deep impact on the agent's ability to learn better prioritization strategies. Generally, both approximators go hand in hand and present similar trends, i.e., for a given dataset and reward function, both decrease or increase in the same amount (more pronounced when using Failure Count and Time-Ranked rewards). 
+\\
+
+% What is the best combination overall
+However, the behaviour observed above no longer holds when looking at the Test Case Failure reward function. It is evidently, the function that produces the best results, in terms of maximizing the slope of the NAPFD trend. When combined with the Network Approximator, this approach reveals the best configuration overall, for the three datasets. Implying that attributing specific feedback to all test-cases individually enables the agent to learn how to effectively prioritize them and adapt to heterogeneous environments. 
+\\
+
+% What can we say about fluctuations ?
+Another aspect reinforcing the notion of heterogeneity is the differences in the fluctuations of each dataset. For the first two datasets, we see evidently fluctuations in the results. Spieker et al. \cite{Spieker} correlates them with the presence of noise in the original dataset, that may have occurred for numerous reasons and are hard to predict, such as test that were added manually and produced cascade down failures. Notwithstanding, this behaviour is not observed for the BNP data, which suggests a much more stable system with less fluctuations, so there is a stronger indicator that, with the right set of features, a crystal-clear relation between test case and the likehood they have of failing can be learned. 
+\\
+
+% Wrap up
+In conclusion, the supremacy of the Network Approximator remains valid for the reward function that produces the best results. Yet, in some cases, the Decision Tree Approximator was able to surpass it's performance, by a small amount. 
+Choosing the best configuration, test case failure reward and the Network Approximator, when RETECS is applied in an environment completely different from Robotics and with different characteristics, it was able to adapt and learn how to effectively prioritize test cases. This shows that the RETECS domain of validity expands to distinct CI environments, which is particularly useful for companies that more and more rely on the health and proper functioning of these systems.
+
+\begin{figure*}[htp]
+	\centering
+	\includegraphics[width=\textwidth]{figures/rq1_napfd.eps}
+	\caption{NAPFD Comparison with different Reward Functions and memory representations: best combination obtained for Test Case Failure reward and Network Approximator (straight lines indicate trend)}
+	\label{rq1}
+\end{figure*}
+
+
+\subsection{RQ2}
+
+\begin{figure*}[!t]
+	\centering
+	\includegraphics[width=\textwidth]{figures/rq2_napfd_bar_abs_grouped.eps}
+	\caption{NAPFD difference in comparison to traditional methods}
+	\label{rq2}
+\end{figure*}
+
+
+The focus of RQ1 was to discover what combinations of components would maximize performance: Test case Failure Reward and the Artificial Neural Network Approximator. Now, with RQ2, the aim is to compare this approach to traditional test case prioritization methods: \textit{Random}, \textit{Sorting} and \textit{Weighting}. The results are depicted in Figure \ref{rq2} as the difference between the NAPFD for the comparison methods and RETECS. Each bar comprises 30 commits. For positive differences, the comparison methods have better performance, on the contrary negative differences show the opposite. 
+Due to the exploratory character of the algorithm, it is expected that at the beginning, the comparison method will make more meaningful prioritizations and this trend is verified in all datasets, although more evidently in Paint Control and BNP. 
+\\
+
+For Paint Control there are 2 adaptation phases: there is a steep convergence in the early commits, only needing around 60 commits to perform as good or better than the comparison methods. Then for the next 90 commits, RETECS performance was progressively worse indicating lack of adaptation and then for the remaining commits, the performances of Sorting and Weighting both match RETECS's and are better than Random. 
+\\
+
+For IOF/ROL, it is evident that the results were inferior to Paint Control, having small increments on performance as was expected from analysing Figure \ref{rq1}. Also the performance of the comparison methods shows the disability to prioritize failing test cases prematurely.
+\\
+
+For BNP data, there is clearly a learning pattern with an adaptation phase of around 90 commits needed to have similar performances to the comparison methods and a significant improvement with respect to Random. Then for the following commits, Random method progressively catches up with other methods, which can be a sign of a mutating environment, i.e. test cases at commit 300 are not failing for the same reasons as they were in commit 90. Overall, the algorithm achieves promising results, when applied to this novel dataset.
+\\
+
+In conclusion, it is evident that RETECS can not perform significantly better than comparison method. RETECS starts without any representation of the environment and it is not specifically programmed to pursue any given strategy. Yet it is possible to make prioritizations as good as traditional methods commonly used in the industry. 
+
+
+\subsection{Threats to Validity}
+\textbf{Internal.} RETECS is not a deterministic algorithm and because of it's exploratory nature, randomness influences the outcomes. In order to mitigate the effect of random decisions, experiments are run for 30 iterations and the presented results correspond to an average. 
+The second thread is related to parameter selection, that due to limited computer power, should have been more extensive and therefore the chosen parameters, most likely are not optimal for each scenario. Ideally, for each specific environment parameters should be thoroughly adjusted. 
+Finally, due to the fact that this version of RETECS is an extension of the work developed by Spieker et al. \cite{Spieker}, there's a thread related to implementation issues. Machine learning algorithms were implemented with the \textit{scikit-learn} library and the framework is available online for inspection and reproducibility. 
+\\
+
+\textbf{External.} The main gap related with external threads, pointed out by Spieker et al. \cite{Spieker}, was the fact that the inclusion of only three datasets was not representative of the wide diversity of CI environments. Although this study bridges this gap by including a novel dataset, increasing data availability and providing more validity to this framework, four datasets still fall short of a representative number of examples. 
+\\
+
+\textbf{Construct.} 
+In this study, the concepts of failed test cases and fault are indistinguishable, yet this is not always true. For example, two test cases can fail due to the same fault, and vice-versa, one test-case can reveal two or more faults. Nonetheless, because information about total faults is not easily accessible, the assumption that each test case indicates a different fault in the system is formulated. Yet by finding all failed test cases, indirectly all faults are detected too.
+Regarding function approximators, there are more machine learning algorithms that should be experimented and finely tuned to have a more accurate state space representation, steering the agent with more precision.
+Regarding the information the agent uses in the decision process, i.e. duration, last execution and execution history, has proven to fail to surpass significantly the performance of simpler traditional methods, like \textit{Sorting}. To bridge this gap, more features should be added to enrich the information the agent has on each state, for example by using code-coverage, so that only test cases that will affect the files modified in a certain commit are considered.
+Finally, RETECS was only compared to three baseline approaches, although there are more in the literature that should be included, including other machine learning methods.
+
+

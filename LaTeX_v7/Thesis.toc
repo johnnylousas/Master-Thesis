@@ -1,65 +1,86 @@
 \babel@toc {english}{}
-\contentsline {section}{Acknowledgments}{v}{section*.1}% 
-\contentsline {section}{Resumo}{vii}{section*.2}% 
-\contentsline {section}{Abstract}{ix}{section*.3}% 
-\contentsline {section}{List of Tables}{xiii}{section*.5}% 
-\contentsline {section}{List of Figures}{xv}{section*.7}% 
-\contentsline {section}{Nomenclature}{1}{section*.9}% 
-\contentsline {section}{Glossary}{1}{section*.10}% 
-\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}% 
-\contentsline {section}{\numberline {1.1}Motivation}{1}{section.1.1}% 
-\contentsline {section}{\numberline {1.2}Objectives}{2}{section.1.2}% 
-\contentsline {section}{\numberline {1.3}Repository}{2}{section.1.3}% 
-\contentsline {section}{\numberline {1.4}Thesis Outline}{2}{section.1.4}% 
-\contentsline {chapter}{\numberline {2}Background}{3}{chapter.2}% 
-\contentsline {section}{\numberline {2.1}Version Control Systems}{3}{section.2.1}% 
-\contentsline {subsection}{\numberline {2.1.1}Repository \& Working Copy}{3}{subsection.2.1.1}% 
-\contentsline {section}{\numberline {2.2}Mono-repositories vs. Multi-repositories}{3}{section.2.2}% 
-\contentsline {section}{\numberline {2.3}Software Testing}{4}{section.2.3}% 
-\contentsline {section}{\numberline {2.4}Regression Testing}{5}{section.2.4}% 
-\contentsline {subsection}{\numberline {2.4.1}Test suite minimisation}{5}{subsection.2.4.1}% 
-\contentsline {subsection}{\numberline {2.4.2}Test Case Selection}{6}{subsection.2.4.2}% 
-\contentsline {subsection}{\numberline {2.4.3}Test case prioritisation}{6}{subsection.2.4.3}% 
-\contentsline {section}{\numberline {2.5}Approach Exploration}{7}{section.2.5}% 
-\contentsline {subsection}{\numberline {2.5.1}Naive-approach}{7}{subsection.2.5.1}% 
-\contentsline {subsection}{\numberline {2.5.2}Cumulative Approach}{7}{subsection.2.5.2}% 
-\contentsline {subsection}{\numberline {2.5.3}Change-List Approach}{8}{subsection.2.5.3}% 
-\contentsline {subsection}{\numberline {2.5.4}Always Green Master Approach}{9}{subsection.2.5.4}% 
-\contentsline {subsubsection}{Probabilistic Speculation}{10}{section*.11}% 
-\contentsline {section}{\numberline {2.6}Machine Learning}{10}{section.2.6}% 
-\contentsline {section}{\numberline {2.7}Supervised Learning}{11}{section.2.7}% 
-\contentsline {subsection}{\numberline {2.7.1}Logistic Regression}{11}{subsection.2.7.1}% 
-\contentsline {subsection}{\numberline {2.7.2}Decision Trees}{13}{subsection.2.7.2}% 
-\contentsline {subsubsection}{Mathematical formulation}{14}{section*.12}% 
-\contentsline {subsection}{\numberline {2.7.3}Ensemble Methods}{15}{subsection.2.7.3}% 
-\contentsline {subsection}{\numberline {2.7.4}Artificial Neural Networks}{15}{subsection.2.7.4}% 
-\contentsline {subsubsection}{Perceptron}{15}{section*.13}% 
-\contentsline {subsubsection}{Activation Functions}{16}{section*.14}% 
-\contentsline {subsubsection}{NN architecture }{17}{section*.15}% 
-\contentsline {subsubsection}{Learning with Gradient Descent}{18}{section*.16}% 
-\contentsline {subsubsection}{Stochastic Gradient Descent (SGD)}{20}{section*.17}% 
-\contentsline {subsubsection}{Backpropagation}{20}{section*.18}% 
-\contentsline {subsection}{\numberline {2.7.5}Model Evaluation and Parameter Tuning}{22}{subsection.2.7.5}% 
-\contentsline {subsection}{\numberline {2.7.6}AutoEncoders}{22}{subsection.2.7.6}% 
-\contentsline {chapter}{\numberline {3}Implementation}{23}{chapter.3}% 
-\contentsline {section}{\numberline {3.1}Synthetic Data Generation}{23}{section.3.1}% 
-\contentsline {section}{\numberline {3.2}Numerical Model}{24}{section.3.2}% 
-\contentsline {section}{\numberline {3.3}Verification and Validation}{24}{section.3.3}% 
-\contentsline {chapter}{\numberline {4}Results}{25}{chapter.4}% 
-\contentsline {section}{\numberline {4.1}Problem Description}{25}{section.4.1}% 
-\contentsline {section}{\numberline {4.2}Baseline Solution}{25}{section.4.2}% 
-\contentsline {section}{\numberline {4.3}Enhanced Solution}{25}{section.4.3}% 
-\contentsline {subsection}{\numberline {4.3.1}Figures}{25}{subsection.4.3.1}% 
-\contentsline {subsubsection}{Images}{25}{section*.19}% 
-\contentsline {subsubsection}{Drawings}{26}{section*.20}% 
-\contentsline {subsection}{\numberline {4.3.2}Equations}{26}{subsection.4.3.2}% 
-\contentsline {subsection}{\numberline {4.3.3}Tables}{27}{subsection.4.3.3}% 
-\contentsline {subsection}{\numberline {4.3.4}Mixing}{28}{subsection.4.3.4}% 
-\contentsline {chapter}{\numberline {5}Conclusions}{29}{chapter.5}% 
-\contentsline {section}{\numberline {5.1}Achievements}{29}{section.5.1}% 
-\contentsline {section}{\numberline {5.2}Future Work}{29}{section.5.2}% 
-\contentsline {chapter}{Bibliography}{31}{section*.21}% 
-\contentsline {chapter}{\numberline {A}Vector calculus}{35}{appendix.A}% 
-\contentsline {section}{\numberline {A.1}Vector identities}{35}{section.A.1}% 
-\contentsline {chapter}{\numberline {B}Technical Datasheets}{37}{appendix.B}% 
-\contentsline {section}{\numberline {B.1}Some Datasheet}{37}{section.B.1}% 
+\contentsline {section}{Acknowledgments}{v}{section*.1}%
+\contentsline {section}{Resumo}{vii}{section*.2}%
+\contentsline {section}{Abstract}{ix}{section*.3}%
+\contentsline {section}{List of Tables}{xiii}{section*.5}%
+\contentsline {section}{List of Figures}{xv}{section*.7}%
+\contentsline {section}{Nomenclature}{1}{section*.9}%
+\contentsline {section}{Glossary}{1}{section*.10}%
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Motivation}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Version Control Systems}{2}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Repository \& Working Copy}{2}{subsection.1.2.1}%
+\contentsline {section}{\numberline {1.3}Mono-repositories vs. Multi-repositories}{2}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Continuous Integration}{3}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}CI Approaches}{3}{subsection.1.4.1}%
+\contentsline {subsubsection}{Naive-approach}{3}{section*.11}%
+\contentsline {subsubsection}{Cumulative Approach}{3}{section*.12}%
+\contentsline {subsubsection}{Change-List Approach}{3}{section*.13}%
+\contentsline {subsubsection}{Always Green Master Approach}{4}{section*.14}%
+\contentsline {paragraph}{Probabilistic Speculation}{5}{section*.15}%
+\contentsline {section}{\numberline {1.5}Software Testing}{6}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Regression Testing}{6}{subsection.1.5.1}%
+\contentsline {subsubsection}{Test suite minimisation}{6}{section*.16}%
+\contentsline {subsubsection}{Test Case Selection}{7}{section*.17}%
+\contentsline {subsubsection}{Test case prioritisation}{7}{section*.18}%
+\contentsline {section}{\numberline {1.6}Machine Learning}{8}{section.1.6}%
+\contentsline {section}{\numberline {1.7}State of the Art}{8}{section.1.7}%
+\contentsline {subsection}{\numberline {1.7.1}Baseline Approaches}{8}{subsection.1.7.1}%
+\contentsline {subsection}{\numberline {1.7.2}Code-Coverage Approaches}{8}{subsection.1.7.2}%
+\contentsline {subsection}{\numberline {1.7.3}History-based Approaches}{8}{subsection.1.7.3}%
+\contentsline {subsection}{\numberline {1.7.4}Modification-based Approaches}{8}{subsection.1.7.4}%
+\contentsline {section}{\numberline {1.8}Test Case Prioritization in Industrial Environments}{8}{section.1.8}%
+\contentsline {section}{\numberline {1.9}Repository}{8}{section.1.9}%
+\contentsline {section}{\numberline {1.10}Objectives \& Thesis Outline}{9}{section.1.10}%
+\contentsline {chapter}{\numberline {2}History-based Reinforcement Learning}{11}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Background}{11}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Formalism}{11}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Notation}{11}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Problem Formulation}{12}{subsection.2.1.3}%
+\contentsline {subsection}{\numberline {2.1.4}Machine Learning}{12}{subsection.2.1.4}%
+\contentsline {section}{\numberline {2.2}RETECS}{12}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Reinforcement Learning for Test Case Prioritization}{13}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Reward functions}{13}{subsection.2.2.2}%
+\contentsline {subsubsection}{Failure-Count Reward}{13}{section*.19}%
+\contentsline {subsubsection}{Test-Case Failure Reward}{13}{section*.20}%
+\contentsline {subsubsection}{Time-Ranked Reward}{14}{section*.21}%
+\contentsline {subsection}{\numberline {2.2.3}Action Selection}{14}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Memory Representation - Value Functions}{14}{subsection.2.2.4}%
+\contentsline {section}{\numberline {2.3}Experimental Setup}{14}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Data Description}{15}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Evaluation Metric}{16}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Fine-Tuning}{16}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}Results}{19}{subsection.2.3.4}%
+\contentsline {subsection}{\numberline {2.3.5}RQ1}{19}{subsection.2.3.5}%
+\contentsline {subsection}{\numberline {2.3.6}RQ2}{20}{subsection.2.3.6}%
+\contentsline {subsection}{\numberline {2.3.7}Threats to Validity}{22}{subsection.2.3.7}%
+\contentsline {chapter}{\numberline {3}Identifying File-Test Links with Neural Network Embeddings}{23}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Background}{23}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Embeddings}{23}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Neural Network Embeddings}{23}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}NNE-TCP Approach}{23}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Implementation}{23}{subsection.3.2.1}%
+\contentsline {section}{\numberline {3.3}Experimental Setup}{26}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Data Description}{26}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Data Cleaning}{26}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Evaluation Metric}{26}{subsection.3.3.3}%
+\contentsline {section}{\numberline {3.4}Results}{27}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Training}{27}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Cross-Validation}{27}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Fine-Tuning}{28}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.4.4}Entity Representation}{28}{subsection.3.4.4}%
+\contentsline {subsection}{\numberline {3.4.5}Threats to Validity}{28}{subsection.3.4.5}%
+\contentsline {chapter}{\numberline {4}Conclusions}{31}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Achievements}{31}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Future Work}{31}{section.4.2}%
+\contentsline {chapter}{Bibliography}{33}{section*.22}%
+\contentsline {chapter}{\numberline {A}Supervised Learning}{37}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Decision Trees}{37}{section.A.1}%
+\contentsline {subsection}{\numberline {A.1.1}Mathematical formulation}{38}{subsection.A.1.1}%
+\contentsline {section}{\numberline {A.2}Artificial Neural Networks}{38}{section.A.2}%
+\contentsline {subsection}{\numberline {A.2.1}Perceptron}{39}{subsection.A.2.1}%
+\contentsline {subsection}{\numberline {A.2.2}Activation Functions}{39}{subsection.A.2.2}%
+\contentsline {subsection}{\numberline {A.2.3}NN architecture }{40}{subsection.A.2.3}%
+\contentsline {subsection}{\numberline {A.2.4}Learning with Gradient Descent}{41}{subsection.A.2.4}%
+\contentsline {subsection}{\numberline {A.2.5}Stochastic Gradient Descent (SGD)}{42}{subsection.A.2.5}%
+\contentsline {subsection}{\numberline {A.2.6}Backpropagation}{42}{subsection.A.2.6}%

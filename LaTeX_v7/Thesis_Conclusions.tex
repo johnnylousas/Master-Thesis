@@ -11,19 +11,33 @@
 \chapter{Conclusions}
 \label{chapter:conclusions}
 
-Insert your chapter material here...
-
+In this study, an extension of the RETECS framework was developed, in order to determine it's ability to prioritize and select test-cases, when presented with a novel dataset, extracted from a different CI environment, validating its generalization. Additionally, Decision Trees were applied for the first time in this context as a model for state space representation. 
+\par Result indicate that RETECS can effectively, create meaningful test schedules in different contexts. In the BNP case, with a combination of the Test Case Failure reward with the Aritifical Neural Network Approximator, around 90 commits suffice to reach the performance of deterministic methods and surpass random prioritization of test-cases. Initially, the evaluation metric NAPFD starts at a value of $0.2$ and has the algorithm progresses, the trend shows values over $0.6$. 
+\par Including Decision Trees in the study did not produce enhancements relative to the ANN, in the best possible case. However in some cases, with other reward functions, performance is comparable and might not be discarded right away, as it can be suited to apply, in future reseach, to other CI environments with specific characteristics.
+\par A novel approach to Test Case Prioritization using Machine Learning was presented, NNE-TCP, by combining Neural Network Embeddings with file-test links obtained from historical data. NNE-TCP is a lightweight and modular framework that not only predicts meaningful prioritizations, but also makes useful entity representations in the embedding space, grouping together similar elements.
+\par Evaluation results point to a major improvement, when compared to the currently used random ordering approach, thus discovering an effective prioritization technique that only requires information about which files in the system, when modified, cause test-cases to transition status. However, it is expected that incorporating additional features would enhance even further the results. 
+\par Finally, the ability to visualise embeddings in 2D space represents an added value, providing insights on the structure of the data. It showed that there is no correlation between the current labels and how these elements are grouped by similarity, which can be due to labelling mistakes or a that there is a new, more elegant, way to organize files and tests by similarity. 
 
 % ----------------------------------------------------------------------
 \section{Achievements}
 \label{section:achievements}
-
-The major achievements of the present work...
 
 
 % ----------------------------------------------------------------------
 \section{Future Work}
 \label{section:future}
 
-A few ideas for future work...
+The results obtained strongly indicate that RETECS can match performance with traditional prioritization methods and is flexible enough to adapt to different contexts. However due to its complexity in relation to traditional methods, to be worth applying, it's performance has to surpass these methods. To do so, it needs more information to formulate better reasonings of expected failures, e.g. links between test cases and modified files. 
+\par Regarding Machine Learning model as function approximators, Decision Trees showed worse performance when compared to ANN's, however more parameter tuning should be conducted to try to find optimal values for all parameters and more models should be evaluated, e.g. Nearest Neighbors.
+\par Furthermore, in real world environments, test-cases are usually run on a grid that allows for paralellization. In our framework, test cases are applied sequentially, one by one, based on their rank. If two test cases are very similar, most likely they will appear together in a test-schedule and detect exactly the same fault. With paralellization, it would be more fruitful to create groups of non-redundant tests to maximize the "surface" covered by each group of test-cases on each run. 
 
+
+The results of this work were the first step towards applying Embeddings in the context of TCP, by using file-test links as features, estabilishing a solid baseline for further studies. 
+Due to limited time and computer power, parameter tuning analysis can be refined further, by exploring more combinations of parameters and measuring the impact on the APFD.
+\par Furthermore, the approach should take into consideration additional features to allow better understanding of expected transitions, e.g. status history of test cases, shortening even more the feedback-loop.
+In terms of entity representation, with a better extraction of labels, embedding groupings can give valuable insight about the architecture of the system, giving the chance to optimize it and reorganize it in the most convenient way.
+\\
+
+Finally, NNE-TCP should be validated and tested against other types of data, so that we know how to make it more flexible and adapt it to different contexts.
+
+% now combine both

@@ -1,48 +1,57 @@
-This is BibTeX, Version 0.99d (TeX Live 2019)
-Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+This is BibTeX, Version 0.99d (TeX Live 2020)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Thesis.aux
 The style file: abbrvunsrtnat.bst
 Database file #1: Thesis_bib_DB.bib
+Warning--entry type for "chollet2015keras" isn't style-file defined
+--line 294 of file Thesis_bib_DB.bib
+Name 1 in "Geron, Aurelien," has a comma at the end for entry geron_hands_on
+while executing---line 1233 of file abbrvunsrtnat.bst
 Warning--empty booktitle in palma
-You've used 24 entries,
+Warning--empty journal in dtRL
+Name 1 in "Geron, Aurelien," has a comma at the end for entry geron_hands_on
+while executing---line 1315 of file abbrvunsrtnat.bst
+Name 1 in "Geron, Aurelien," has a comma at the end for entry geron_hands_on
+while executing---line 1315 of file abbrvunsrtnat.bst
+You've used 34 entries,
             2481 wiz_defined-function locations,
-            732 strings with 10849 characters,
-and the built_in function-call counts, 10970 in all, are:
-= -- 941
-> -- 588
-< -- 22
-+ -- 224
-- -- 176
-* -- 805
-:= -- 1706
-add.period$ -- 101
-call.type$ -- 24
-change.case$ -- 45
-chr.to.int$ -- 24
-cite$ -- 25
-duplicate$ -- 569
-empty$ -- 954
-format.name$ -- 210
-if$ -- 2427
+            809 strings with 12672 characters,
+and the built_in function-call counts, 14910 in all, are:
+= -- 1315
+> -- 772
+< -- 29
++ -- 296
+- -- 228
+* -- 1071
+:= -- 2319
+add.period$ -- 148
+call.type$ -- 34
+change.case$ -- 65
+chr.to.int$ -- 34
+cite$ -- 36
+duplicate$ -- 790
+empty$ -- 1290
+format.name$ -- 279
+if$ -- 3310
 int.to.chr$ -- 1
-int.to.str$ -- 25
-missing$ -- 24
-newline$ -- 151
-num.names$ -- 72
-pop$ -- 213
+int.to.str$ -- 35
+missing$ -- 34
+newline$ -- 215
+num.names$ -- 102
+pop$ -- 297
 preamble$ -- 1
-purify$ -- 24
+purify$ -- 34
 quote$ -- 0
-skip$ -- 386
+skip$ -- 543
 stack$ -- 0
-substring$ -- 452
-swap$ -- 160
-text.length$ -- 11
+substring$ -- 541
+swap$ -- 218
+text.length$ -- 13
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 159
-warning$ -- 1
-while$ -- 79
+type$ -- 223
+warning$ -- 2
+while$ -- 102
 width$ -- 0
-write$ -- 370
-(There was 1 warning)
+write$ -- 533
+(There were 3 error messages)

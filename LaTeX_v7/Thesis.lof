@@ -1,17 +1,26 @@
 \babel@toc {english}{}
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Code repository and workflow at Google. Each CL is submitted to master branch or HEAD \cite {Ziftci}}}{4}{figure.1.1}%
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Speculation tree - builds and outcomes \cite {Uber}}}{5}{figure.1.2}%
+\contentsline {figure}{\numberline {1.3}{\ignorespaces Average percentage of fault detection \cite {APFD}}}{7}{figure.1.3}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Average percentage of fault detection \cite {APFD}}}{7}{figure.2.1}% 
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Code repository and workflow at Google. Each CL is submitted to master branch or HEAD \cite {Ziftci}}}{8}{figure.2.2}% 
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Speculation tree - builds and outcomes \cite {Uber}}}{10}{figure.2.3}% 
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Each internal (non-leaf) node represents a test on an attribute. Each leaf node represents a class (if the client is likely to buy the product yes/no )}}{13}{figure.2.4}% 
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Perceptron simple example)}}{16}{figure.2.5}% 
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Comparative analysis of different activation functions (made in Python))}}{17}{figure.2.6}% 
-\contentsline {figure}{\numberline {2.7}{\ignorespaces Architecture example of a NN \cite {nielsenneural}}}{18}{figure.2.7}% 
-\contentsline {figure}{\numberline {2.8}{\ignorespaces Global and Local minimum determination \cite {udemyDS}}}{19}{figure.2.8}% 
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Reinforcement Learning applied to TCP cycle of Agent-Environment interactions (adapted from \cite {rlintro})}}{13}{figure.2.1}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Represent state space regions with Decision Trees (Adapted from \cite {dtRL})}}{15}{figure.2.2}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces ANN Approximator - Hidden Layer architecture}}{17}{figure.2.3}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces DT Approximator - Parameter Tuning}}{18}{figure.2.4}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces History Length}}{19}{figure.2.5}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces NAPFD Comparison with different Reward Functions and memory representations: best combination obtained for Test Case Failure reward and Network Approximator (straight lines indicate trend)}}{21}{figure.2.6}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces NAPFD difference in comparison to traditional methods}}{22}{figure.2.7}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Neural Network Embedding Model Architecture}}{25}{figure.3.1}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Average number of occurrences per files/tests}}{26}{figure.3.2}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Baseline Approach: Embedding size - 100, Negative ratio - 2, batch size - 5 commits, Task - Regression and epochs - 10}}{27}{figure.3.3}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Cross Validation}}{27}{figure.3.4}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Best APFD distribution - Maximum mean value }}{28}{figure.3.5}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Schematic of some algorithm.}}{26}{figure.4.1}% 
-\addvspace {10\p@ }
-\addvspace {10\p@ }
-\addvspace {10\p@ }
+\contentsline {figure}{\numberline {A.1}{\ignorespaces Each internal (non-leaf) node represents a test on an attribute. Each leaf node represents a class (if the client is likely to buy the product yes/no )}}{37}{figure.A.1}%
+\contentsline {figure}{\numberline {A.2}{\ignorespaces Perceptron simple example)}}{39}{figure.A.2}%
+\contentsline {figure}{\numberline {A.3}{\ignorespaces Comparative analysis of different activation functions (made in Python))}}{40}{figure.A.3}%
+\contentsline {figure}{\numberline {A.4}{\ignorespaces Architecture example of a NN \cite {nielsenneural}}}{40}{figure.A.4}%
+\contentsline {figure}{\numberline {A.5}{\ignorespaces Global and Local minimum determination \cite {udemyDS}}}{41}{figure.A.5}%
